@@ -347,6 +347,7 @@ li#menu-academico{
     text-align: center;
 	 padding: 1em;
 	 margin-right: 1%;
+    border:100%
 }
 .nav > li > a:hover, .nav > li > a:focus {
     background: none !important;
