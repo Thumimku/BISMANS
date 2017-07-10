@@ -1,9 +1,7 @@
-<!--
-Author: W3layouts
-Author URL: http://w3layouts.com
-License: Creative Commons Attribution 3.0 Unported
-License URL: http://creativecommons.org/licenses/by/3.0/
--->
+<?php
+    include_once('config.php');
+    include_once('system_session.php');
+?>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -23,6 +21,29 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!-- jQuery -->
 <script src="js/jquery-2.1.4.min.js"></script>
 <!-- //jQuery -->
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+    <!--<script src="https://www.w3schools.com/lib/w3.js"></script>-->
+    <script src="js/w3.js"></script>
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel='stylesheet' type='text/css' />
+    <!-- Custom CSS -->
+    <link href="css/style.css" rel='stylesheet' type='text/css' />
+
+    <link rel="stylesheet" href="css/morris.css" type="text/css"/>
+    <!-- Graph CSS -->
+    <link href="css/font-awesome.css" rel="stylesheet">
+    <!-- jQuery -->
+    <script src="js/jquery-2.1.4.min.js"></script>
+    <!-- //jQuery -->
+    <link href='//fonts.googleapis.com/css?family=Roboto:700,500,300,100italic,100,400' rel='stylesheet' type='text/css'/>
+    <link href='//fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <!-- lined-icons -->
+    <link rel="stylesheet" href="css/icon-font.min.css" type='text/css' />
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/w3.js"></script>
 <link href='//fonts.googleapis.com/css?family=Roboto:700,500,300,100italic,100,400' rel='stylesheet' type='text/css'/>
 <link href='//fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
 <!-- lined-icons -->
@@ -36,35 +57,61 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
    <!--/content-inner-->
 <div class="left-content">
 	   <div class="mother-grid-inner">
-		   <div w3-include-html="notifi.html"></div>
-		   <script>
-               w3.includeHTML();
-		   </script>
+           <?php
+           include_once("notifi.php");
+           include_once("slidebar.php");
+           ?>
 
   <div class="grid-form1">
-  	       <h3>Order Detail</h3>
+  	       <h3>Order Invoice</h3>
 
   	         <div class="tab-content">
+
+                 <?php
+                    if (isset($_GET['orderId'])){
+                        $orderId = $_GET['orderId'];
+                        $customerId = $_GET['customerId'];
+                        $customerQuery = "SELECT * from tblcustomerdetails WHERE customerId = $customerId";
+                        $customerQuery = $mysqli->query($customerQuery);
+                        $customerObj = $customerQuery->fetch_object();
+                        $customerName = $customerObj->customerName;
+                        $addressLine1 = $customerObj->addressLine1;
+                        $addressLine2 = $customerObj->addressLine2;
+                        $city = $customerObj->city;
+                        $province = $customerObj->province;
+                        $address = $addressLine1.","."\r"."<br>".$addressLine2.","."\r"."<br>".$city.","."\r"."<br>".$province.".";
+                        $contactPerson = $customerObj->contactPerson;
+                        $contactNo = $customerObj->contactNo.".";
+
+
+
+                        $orderQuery = "SELECT * from tblorder WHERE orderId = $orderId";
+                        $orderQuery = $mysqli->query($orderQuery);
+                        $orderObj = $orderQuery->fetch_object();
+                        $subTotal = $orderObj->subtotal;
+                        $discount = $orderObj->discount."%";
+                        $total = $orderObj->total;
+                    }
+                 ?>
 						<div class="tab-pane active" id="horizontal-form_1">
 							<form class="form-horizontal">
 								<div class="form-group">
 									<label  class="col-sm-3 control-label"><strong>Order ID :</strong></label>
-									<label  class="col-sm-3 control-label" id="ordermodal_orderid">Order ID</label>
-									<label  class="col-sm-3 control-label"><strong>Shop Name :</strong></label>
-									<label  class="col-sm-3 control-label " id="ordermodal_shopname">Shop name</label>
+									<label  class="col-sm-3 control-label" id="ordermodal_orderid"> <?php echo $orderId; ?></label>
+									<label  class="col-sm-3 control-label"><strong>Shop Address :</strong></label>
+									<label  class="col-sm-3 control-label " id="ordermodal_shopname"><?php echo $address; ?></label>
 								</div>
 								<div class="form-group">
 
-									<label  class="col-sm-3 control-label"><strong>Shop Address :</strong></label>
-									<label  class="col-sm-3 control-label" id="ordermodal_shopaddress">Shop address</label>
-									<label  class="col-sm-3 control-label"><strong>City and Province :</strong></label>
-									<label  class="col-sm-3 control-label" id="ordermodal_cityandprovince">City and Province</label>
+									<label  class="col-sm-3 control-label"><strong>Shop Name :</strong></label>
+									<label  class="col-sm-3 control-label" id="ordermodal_shopaddress"><?php echo $customerName; ?></label>
+
 								</div>
 								<div class="form-group">
 									<label  class="col-sm-3 control-label"><strong>Contact Person :</strong></label>
-									<label  class="col-sm-3 control-label" id="ordermodal_contactperson">contact person</label>
+									<label  class="col-sm-3 control-label" id="ordermodal_contactperson"><?php echo $contactPerson; ?></label>
 									<label  class="col-sm-3 control-label"><strong>Contact Number :</strong></label>
-									<label  class="col-sm-3 control-label" id="ordermodal_contactnumber">contact number</label>
+									<label  class="col-sm-3 control-label" id="ordermodal_contactnumber"><?php echo $contactNo; ?></label>
 								</div>
 							</form>
 						</div>
@@ -83,55 +130,22 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						   <label  class="col-sm-2 control-label"><strong>Unit Price</strong></label>
 						   <label  class="col-sm-2 control-label"><strong>Price</strong></label>
 					   </div>
-					   <div class="form-group">
-						   <label  class="col-sm-2 control-label" id="ordermodal_sku">12586</label>
-						   <label  class="col-sm-2 control-label" id="ordermodal_productname">Paracitamol</label>
-						   <label  class="col-sm-2 control-label" id="ordermodal_quantity">100</label>
-						   <label  class="col-sm-2 control-label" id="ordermodal_unitprice">5</label>
-						   <label  class="col-sm-2 control-label" id="ordermodal_price">calculated</label>
-					   </div>
-					   <div class="form-group">
-					   <label  class="col-sm-2 control-label">12xssx586</label>
-					   <label  class="col-sm-2 control-label">Paracitamol</label>
-					   <label  class="col-sm-2 control-label">100</label>
-					   <label  class="col-sm-2 control-label">5</label>
-					   <label  class="col-sm-2 control-label">calculated</label>
-			   			</div>
-			   <div class="form-group">
-			   <label  class="col-sm-2 control-label">12586</label>
-			   <label  class="col-sm-2 control-label">Paracitamol</label>
-			   <label  class="col-sm-2 control-label">100</label>
-			   <label  class="col-sm-2 control-label">5</label>
-			   <label  class="col-sm-2 control-label">calculated</label>
-		   				</div>
-					   <div class="form-group">
-						   <label  class="col-sm-2 control-label">12586</label>
-						   <label  class="col-sm-2 control-label">Paracitamol</label>
-						   <label  class="col-sm-2 control-label">100</label>
-						   <label  class="col-sm-2 control-label">5</label>
-						   <label  class="col-sm-2 control-label">calculated</label>
-					   </div>
-					   <div class="form-group">
-						   <label  class="col-sm-2 control-label">12586</label>
-						   <label  class="col-sm-2 control-label">Paracitamol</label>
-						   <label  class="col-sm-2 control-label">100</label>
-						   <label  class="col-sm-2 control-label">5</label>
-						   <label  class="col-sm-2 control-label">calculated</label>
-					   </div>
-					   <div class="form-group">
-						   <label  class="col-sm-2 control-label">12586</label>
-						   <label  class="col-sm-2 control-label">Paracitamol</label>
-						   <label  class="col-sm-2 control-label">100</label>
-						   <label  class="col-sm-2 control-label">5</label>
-						   <label  class="col-sm-2 control-label">calculated</label>
-					   </div>
-					   <div class="form-group">
-						   <label  class="col-sm-2 control-label">12586</label>
-						   <label  class="col-sm-2 control-label">Paracitamol</label>
-						   <label  class="col-sm-2 control-label">100</label>
-						   <label  class="col-sm-2 control-label">5</label>
-						   <label  class="col-sm-2 control-label">calculated</label>
-					   </div>
+                       <?php
+                            $itemQuery = "SELECT * from tblorderitems WHERE orderId = $orderId";
+                            $itemQuery = $mysqli->query($itemQuery);
+                            while($itemObj = $itemQuery->fetch_object()) {
+                                ?>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" id="ordermodal_sku"><?php echo $itemObj->sku; ?></label>
+                                    <label class="col-sm-2 control-label"
+                                           id="ordermodal_productname"><?php echo $itemObj->productName; ?></label>
+                                    <label class="col-sm-2 control-label" id="ordermodal_quantity"><?php echo $itemObj->quantity; ?></label>
+                                    <label class="col-sm-2 control-label" id="ordermodal_unitprice"><?php echo $itemObj->unitPrice; ?></label>
+                                    <label class="col-sm-2 control-label" id="ordermodal_price"><?php echo $itemObj->price; ?></label>
+                                </div>
+                                <?php
+                            }
+                       ?>
 				   </form>
 			   </div>
 		   </div>
@@ -154,14 +168,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			  <form class="form-horizontal">
 				  <div class="form-group">
 					  <label  class="col-sm-3 control-label"><strong>SubTotal :</strong></label>
-					  <label  class="col-sm-3 control-label" id="ordermodal_subtotal">sub total</label>
+					  <label  class="col-sm-3 control-label" id="ordermodal_subtotal"><?php echo $subTotal; ?></label>
 
 				  </div>
 				  <div class="form-group">
 					  <label  class="col-sm-3 control-label"><strong>Discount :</strong></label>
-					  <label  class="col-sm-3 control-label" id="ordermodal_discount">Discount</label>
+					  <label  class="col-sm-3 control-label" id="ordermodal_discount"><?php echo $discount; ?></label>
 					  <label  class="col-sm-3 control-label"><strong>Total :</strong></label>
-					  <label  class="col-sm-3 control-label" id="ordermodal total">total</label>
+					  <label  class="col-sm-3 control-label" id="ordermodal total"><?php echo $total; ?></label>
 				  </div>
 
 							</form>
@@ -179,8 +193,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
       <div class="panel-footer">
 		<div class="row">
 			<div class="col-sm-8 col-sm-offset-2">
-				<button class="btn-primary btn" id="ordermodal_accept">Accept</button>
-				<button class="btn-default btn" id="ordermodal_postpone">Postpone</button>
+				<a href="orderDetail.php?redirect=true"> <button class="btn-primary btn">Go back </button></a>
+
 
 			</div>
 		</div>

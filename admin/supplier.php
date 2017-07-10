@@ -1,9 +1,7 @@
-<!--
-Author: W3layouts
-Author URL: http://w3layouts.com
-License: Creative Commons Attribution 3.0 Unported
-License URL: http://creativecommons.org/licenses/by/3.0/
--->
+<?php
+    include_once('config.php');
+    include_once('system_session.php');
+?>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -22,6 +20,29 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!-- Graph CSS -->
 <link href="css/font-awesome.css" rel="stylesheet"> 
 <!-- jQuery -->
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+    <!--<script src="https://www.w3schools.com/lib/w3.js"></script>-->
+    <script src="js/w3.js"></script>
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel='stylesheet' type='text/css' />
+    <!-- Custom CSS -->
+    <link href="css/style.css" rel='stylesheet' type='text/css' />
+
+    <link rel="stylesheet" href="css/morris.css" type="text/css"/>
+    <!-- Graph CSS -->
+    <link href="css/font-awesome.css" rel="stylesheet">
+    <!-- jQuery -->
+    <script src="js/jquery-2.1.4.min.js"></script>
+    <!-- //jQuery -->
+    <link href='//fonts.googleapis.com/css?family=Roboto:700,500,300,100italic,100,400' rel='stylesheet' type='text/css'/>
+    <link href='//fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <!-- lined-icons -->
+    <link rel="stylesheet" href="css/icon-font.min.css" type='text/css' />
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/w3.js"></script>
 <script src="js/jquery-2.1.4.min.js"></script>
 <!-- //jQuery -->
 <!-- tables -->
@@ -68,10 +89,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <div class="left-content">
 	   <div class="mother-grid-inner">
             <!--header start here-->
-		   <div w3-include-html="notifi.html"></div>
-		   <script>
-               w3.includeHTML();
-		   </script>
+           <?php
+           include_once("notifi.php");
+           include_once("slidebar.php");
+           ?>
 
 		   <!--heder end here-->
 <ol class="breadcrumb">
@@ -85,27 +106,43 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<h2>Supplier Details</h2>
 			<table id="table">
 				<thead>
+
 				<tr>
 					<th>Supplier ID</th>
 					<th>Supplier Name</th>
 					<th>Address</th>
 					<th>Contact Person</th>
 					<th>Contact Number</th>
-					<th>Product Type(SKU)</th>
+
 
 
 				</tr>
 				</thead>
 				<tbody>
-				<tr>
-					<td id="supplier_supplierid">Supplier ID</td>
-					<td id="supplier_suppliername">Supplier Name</td>
-					<td id="supplier_address">Address</td>
-					<td id="supplier_contactperson">Contact Person</td>
-					<td id="supplier_number">Contact Number</td>
-					<td id="supplier_producttype">Product Type(SKU)</td>
+                <?php
+                    $supplierQuery = "SELECT * from tblsupplierdetails";
+                    $supplierQuery = $mysqli->query($supplierQuery);
+                    while ($supplierObj = $supplierQuery->fetch_object()) {
+                        $addressLine1 = $supplierObj->addressline1;
+                        $addressLine2 = $supplierObj->addressline2;
+                        $city = $supplierObj->city;
+                        $province = $supplierObj->province;
+                        $address = $addressLine1.","."\r"."<br>".$addressLine2.","."\r"."<br>".$city.","."\r"."<br>".$province;
 
-				</tr>
+                        ?>
+                        <tr>
+                            <td id="supplier_supplierid"><?php echo $supplierObj->supplierId; ?></td>
+                            <td id="supplier_suppliername"><?php echo $supplierObj->supplierName; ?></td>
+                            <td id="supplier_address"><?php echo $address; ?></td>
+                            <td id="supplier_contactperson"><?php echo $supplierObj->contactPerson; ?></td>
+                            <td id="supplier_number"><?php echo $supplierObj->contactNo; ?></td>
+
+
+                        </tr>
+
+                        <?php
+                    }
+                ?>
 
 				</tbody>
 			</table>

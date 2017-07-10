@@ -1,9 +1,7 @@
-<!--
-Author: W3layouts
-Author URL: http://w3layouts.com
-License: Creative Commons Attribution 3.0 Unported
-License URL: http://creativecommons.org/licenses/by/3.0/
--->
+<?php
+    include_once('system_session.php');
+    include_once('config.php');
+?>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -15,6 +13,30 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<script src="js/w3.js"></script>
 	<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 <!-- Bootstrap Core CSS -->
+
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+    <!--<script src="https://www.w3schools.com/lib/w3.js"></script>-->
+    <script src="js/w3.js"></script>
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel='stylesheet' type='text/css' />
+    <!-- Custom CSS -->
+    <link href="css/style.css" rel='stylesheet' type='text/css' />
+
+    <link rel="stylesheet" href="css/morris.css" type="text/css"/>
+    <!-- Graph CSS -->
+    <link href="css/font-awesome.css" rel="stylesheet">
+    <!-- jQuery -->
+    <script src="js/jquery-2.1.4.min.js"></script>
+    <!-- //jQuery -->
+    <link href='//fonts.googleapis.com/css?family=Roboto:700,500,300,100italic,100,400' rel='stylesheet' type='text/css'/>
+    <link href='//fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <!-- lined-icons -->
+    <link rel="stylesheet" href="css/icon-font.min.css" type='text/css' />
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/w3.js"></script>
 <link href="css/bootstrap.min.css" rel='stylesheet' type='text/css' />
 <!-- Custom CSS -->
 <link href="css/style.css" rel='stylesheet' type='text/css' />
@@ -68,26 +90,60 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <div class="left-content">
 	   <div class="mother-grid-inner">
             <!--header start here-->
-		   <div w3-include-html="notifi.html"></div>
-		   <script>
-               w3.includeHTML();
-		   </script>
+           <?php
+           include_once("notifi.php");
+           include_once("slidebar.php");
+           ?>
 
 		   <!--heder end here-->
 <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.php">Home</a><i class="fa fa-angle-right"></i>Add New Customer</li>
+        <?php if (isset($_GET['editmode'])) { ?>
+            <li class="breadcrumb-item" ><a href = "index.php" > Home</a ><i class="fa fa-angle-right" ></i >Customer details </li ><i class="fa fa-angle-right" ></i ></i > Edit Customer details </li >
+        <?php } else { ?>
+            <li class="breadcrumb-item" ><a href = "index.php" > Home</a ><i class="fa fa-angle-right" ></i > Add New Customer </li >
+        <?php } ?>
+
 </ol>
 		   <div class="grid-form1">
-			   <h3>New Customer Detail</h3>
+			   <h3><?php
+                   if(isset($_GET['editmode']))
+                   { echo "Edit Customer details";
+                       $post_pass_value="?editmode=activated&customerId=".$_GET['customerId'];}
+                   else { echo "New Customer Detail";$post_pass_value=""; } ?></h3>
 
+
+               <?php
+               if(isset($_GET['sucess']))
+               {
+                   echo "<h3 style='text-align: center;'><font color=\"red\"> Saved!.</font></h3>";
+               }
+               else if(isset($_GET['error']))
+               {
+                   echo "<h3 style='text-align: center;'><font color=\"red\"> Failed, Could not save!</font></h3>";
+
+               }
+               else if(isset($_GET['dup']))
+               {
+                   echo "<h3 style='text-align: center;'> <font color=\"red\"> Duplicate Shop Registration, Please Check & Re-enter it.</font></h3>";
+               }?>
 			   <div class="tab-content">
 				   <div class="tab-pane active" id="horizontal-form_1">
-					   <form class="form-horizontal">
+					   <form class="form-horizontal" method = "post" action = "<?php echo "addCustomer.php".$post_pass_value ?>">
+                           <?php if(isset($_GET['editmode'])) { ?>
+                           <div class="form-group">
+
+                               <label  class="col-sm-3 control-label"><strong>Customer ID :</strong></label>
+
+                               <label id="editcustomer_customerid" class="col-sm-3 control-label"  > <?php if(isset($_GET['customerId'])) { echo $_GET['customerId'];}?></strong></label>
+
+
+                           </div>
+                           <?php } ?>
 						   <div class="form-group">
 
 							   <label  ><strong>Shop Name :</strong></label>
 							   <div >
-								   <input type="text" class="form-control1" id="addnewcustomer_customer" placeholder="Customer Name">
+								   <input type="text" class="form-control1" value="<?php if(isset($_GET['customerName'])) { echo $_GET['customerName'];}?>" name = "shopName"id="addnewcustomer_customer" placeholder="Customer Name" required>
 							   </div>
 
 						   </div>
@@ -96,9 +152,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 							   <label  ><strong>Street Address :</strong></label>
 							   <div >
-								   <input type="text" class="form-control1" id="addnewcustomer_streetaddress_1" placeholder="Street Address ">
+								   <input type="text" class="form-control1" value="<?php if(isset($_GET['addressLine1'])) { echo $_GET['addressLine1'];}?>" name = "streetAddressLine1" id="addnewcustomer_streetaddress_1" placeholder="Street Address line 1" required >
 							   </div><div >
-							   <input type="text" class="form-control1" id="addnewcustomer_streetaddress_2" placeholder="Street Address">
+							   <input type="text" class="form-control1" value="<?php if(isset($_GET['addressLine2'])) { echo $_GET['addressLine2'];}?>" name =  "streetAddressLine2" id="addnewcustomer_streetaddress_2" placeholder="Street Address line 2" required>
 						   </div>
 
 
@@ -108,7 +164,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 							   <label  ><strong>city :</strong></label>
 							   <div >
-								   <input type="text" class="form-control1" id="addnewcustomer_city" placeholder="City">
+								   <input type="text" value="<?php if(isset($_GET['city'])) { echo $_GET['city'];}?>" name = "city" class="form-control1" id="addnewcustomer_city" placeholder="City" required>
 							   </div>
 
 						   </div>
@@ -117,22 +173,45 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 							   <label  ><strong>Province :</strong></label>
 							   <div >
-								   <input type="text" class="form-control1" id="addnewcustomer_province" placeholder="Province">
+								   <input type="text" value="<?php if(isset($_GET['province'])) { echo $_GET['province'];}?>" class="form-control1" name = "province" id="addnewcustomer_province" placeholder="Province" required>
 							   </div>
 
 						   </div>
 						   <div class="form-group">
 							   <label  ><strong>Contact Person :</strong></label>
 							   <div >
-								   <input type="text" class="form-control1" id="addnewcustomer_contactperson" placeholder="Contact Person">
+								   <input type="text" value="<?php if(isset($_GET['contactPerson'])) { echo $_GET['contactPerson'];}?>"class="form-control1" name = "contactPerson" id="addnewcustomer_contactperson" placeholder="Contact Person" required>
 							   </div>
 						   </div>
 						   <div class="form-group">
 							   <label  ><strong>Contact Number :</strong></label>
 							   <div >
-								   <input type="text" class="form-control1" id="addnewcustomer_contactnumber" placeholder="Contact Number ">
+								   <input type="text" value="<?php if(isset($_GET['contactNo'])) { echo $_GET['contactNo'];} ?>" class="form-control1" name = "contactNo" id="addnewcustomer_contactnumber" placeholder="Contact Number" required>
 							   </div>
 						   </div>
+                           <div class="grid-form1">
+
+
+
+
+                               <div class="bs-example" data-example-id="form-validation-states-with-icons">
+                                   <form>
+
+
+
+
+                                       <div class="panel-footer">
+                                           <div class="row">
+                                               <div class="col-sm-8 col-sm-offset-2">
+                                                   <button class="btn-primary btn" id="addnewcustomer_accept	">Accept</button>
+
+
+                                               </div>
+                                           </div>
+                                       </div>
+                                   </form>
+                               </div>
+                           </div>
 					   </form>
 				   </div>
 			   </div>
@@ -145,29 +224,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 
 
-		   <div class="grid-form1">
 
-
-
-
-			   <div class="bs-example" data-example-id="form-validation-states-with-icons">
-				   <form>
-
-
-
-
-					   <div class="panel-footer">
-						   <div class="row">
-							   <div class="col-sm-8 col-sm-offset-2">
-								   <button class="btn-primary btn" id="addnewcustomer_accept	">Accept</button>
-
-
-							   </div>
-						   </div>
-					   </div>
-				   </form>
-			   </div>
-		   </div>
   <!--//content-inner-->
 		<!--/sidebar-menu-->
 	   <div w3-include-html="slidebar.html"></div>

@@ -1,17 +1,14 @@
-<!--
-Author: W3layouts
-Author URL: http://w3layouts.com
-License: Creative Commons Attribution 3.0 Unported
-License URL: http://creativecommons.org/licenses/by/3.0/
--->
+<?php
+    include_once('config.php');
+    include_once('system_session.php');
+?>
+
+
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>Pooled Admin Panel Category Flat Bootstrap Responsive Web Template | Tabels :: w3layouts</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="keywords" content="Pooled Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
-Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+<title>Product Details</title>
+
 	<script src="js/w3.js"></script>
 	<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 <!-- Bootstrap Core CSS -->
@@ -25,6 +22,29 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="js/jquery-2.1.4.min.js"></script>
 <!-- //jQuery -->
 <!-- tables -->
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+    <!--<script src="https://www.w3schools.com/lib/w3.js"></script>-->
+    <script src="js/w3.js"></script>
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel='stylesheet' type='text/css' />
+    <!-- Custom CSS -->
+    <link href="css/style.css" rel='stylesheet' type='text/css' />
+
+    <link rel="stylesheet" href="css/morris.css" type="text/css"/>
+    <!-- Graph CSS -->
+    <link href="css/font-awesome.css" rel="stylesheet">
+    <!-- jQuery -->
+    <script src="js/jquery-2.1.4.min.js"></script>
+    <!-- //jQuery -->
+    <link href='//fonts.googleapis.com/css?family=Roboto:700,500,300,100italic,100,400' rel='stylesheet' type='text/css'/>
+    <link href='//fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <!-- lined-icons -->
+    <link rel="stylesheet" href="css/icon-font.min.css" type='text/css' />
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/w3.js"></script>
 <link rel="stylesheet" type="text/css" href="css/table-style.css" />
 <link rel="stylesheet" type="text/css" href="css/basictable.css" />
 <script type="text/javascript" src="js/jquery.basictable.min.js"></script>
@@ -68,10 +88,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <div class="left-content">
 	   <div class="mother-grid-inner">
             <!--header start here-->
-		   <div w3-include-html="notifi.html"></div>
-		   <script>
-               w3.includeHTML();
-		   </script>
+           <?php
+           include_once("notifi.php");
+           include_once("slidebar.php");
+           ?>
 
 		   <!--heder end here-->
 <ol class="breadcrumb">
@@ -83,10 +103,21 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<div class="agile-tables">
 		<div class="w3l-table-info">
 			<h2>Product Details</h2>
+            <?php
+            if (isset($_GET['sucess'])){
+                echo "<h3 style='text-align: center;'><font color=\"red\"> Saved!.</font></h3>";
+            }else if(isset($_GET['error'])){
+                echo "<h3 style='text-align: center;'><font color=\"red\"> Failed, Could not save!</font></h3>";
+
+            }else if(isset($_GET['dup'])){
+                echo "<h3 style='text-align: center;'> <font color=\"red\"> Duplicate product detail, Please Check & Re-enter it.</font></h3>";
+            }
+
+            ?>
 			<table id="table">
 				<thead>
 				<tr>
-					<th>Product ID/SKU</th>
+					<th>SKU</th>
 					<th>product Name</th>
 					<th>TR Price</th>
 					<th>WS Price</th>
@@ -97,18 +128,32 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</tr>
 				</thead>
 				<tbody>
+                <?php
+                $productQuery = "SELECT * from tblproductdetails";
+                $productQuery = $mysqli->query($productQuery);
+                while($productObj = $productQuery->fetch_object()){
+
+                ?>
 				<tr>
-					<td id="product_productid">012545</td>
-					<td id="product_productname">product Name</td>
-					<td id="product_trprice">100.00</td>
-					<td id="product_wsprice">100.00</td>
-					<td id="product_mrprice">100.00</td>
-					<td id="product_supplier">Supplier</td>
-					<td id="product_thresholdamount">100</td>
-					<td><a href="editproductdetails.php" id="product_edit">Edit</a></td>
+					<td id="product_productid"><?php echo $productObj->sku; ?></td>
+					<td id="product_productname"><?php echo $productObj->name; ?></td>
+					<td id="product_trprice"><?php echo $productObj->trPrice; ?></td>
+					<td id="product_wsprice"><?php echo $productObj->wsPrice; ?></td>
+					<td id="product_mrprice"><?php echo $productObj->mrPrice; ?></td>
+					<td id="product_supplier"><?php echo $productObj->supplier; ?></td>
+					<td id="product_thresholdamount"><?php echo $productObj->threshold; ?></td>
+					<td><a href="editproductdetails.php?editmode=activated
+&sku=<?php echo $productObj->sku; ?>
+&productId=<?php echo $productObj->productId; ?>
+&productName=<?php echo $productObj->name; ?>
+&trPrice=<?php echo $productObj->trPrice; ?>
+&mrPrice=<?php echo $productObj->mrPrice; ?>
+&wsPrice=<?php echo $productObj->wsPrice; ?>
+&supplier=<?php echo $productObj->supplier; ?>
+&threshold=<?php echo $productObj->threshold; ?>" id="product_edit">Edit</a></td>
 
 				</tr>
-
+                <?php } ?>
 				</tbody>
 			</table>
 		</div>
