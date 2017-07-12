@@ -310,17 +310,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <DIV class="float-left col-heading">Item Price</DIV>
 </DIV>
 <DIV id="product">
-<?php require_once("input.php") ?>
-</DIV>
-<DIV class="btn-action float-clear">
-<input type="button" name="add_item" value="Add More" onClick="addMore();" />
-<input type="button" name="del_item" value="Delete" onClick="deleteRow();" />
-<span class="success"><?php if(isset($message)) { echo $message; }?></span>
-</DIV>
-<!--<DIV class="footer">-->
-<br></br>
-<DIV>
-<input type="submit" name="total" value="Total" />
+
 <input type="submit" name="save" value="Save" />
 </DIV>
 </DIV>

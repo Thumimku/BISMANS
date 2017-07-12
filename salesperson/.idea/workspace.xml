@@ -4,7 +4,6 @@
     <list default="true" id="3e576a96-bc9e-4e1e-b620-15ae2b026531" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AddNew.php" afterPath="$PROJECT_DIR$/AddNew.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CustomerDetails.php" afterPath="$PROJECT_DIR$/CustomerDetails.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/orders.php" afterPath="$PROJECT_DIR$/orders.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -118,12 +117,12 @@
       <option name="presentableId" value="Default" />
       <updated>1499773342446</updated>
       <workItem from="1499773366535" duration="829000" />
-      <workItem from="1499783847767" duration="1837000" />
+      <workItem from="1499783847767" duration="1287000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2666000" />
+    <option name="totallyTimeSpent" value="2116000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="0" width="1378" height="735" extended-state="1" />
