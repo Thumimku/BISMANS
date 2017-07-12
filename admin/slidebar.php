@@ -46,6 +46,13 @@
 
                 </ul>
             </li>
+            <li ><a href="#"><i class="fa fa-user" aria-hidden="true"></i><span> SALES REP </span> <span class="fa fa-angle-right" style="float: right"></span><div class="clearfix"></div></a>
+                <ul  >
+                    <li  ><a href="addnewemployee.php">ADD NEW</a></li>
+                    <li  ><a href="employee.php">DETAILS</a></li>
+
+                </ul>
+            </li>
 
         </ul>
     </div>
