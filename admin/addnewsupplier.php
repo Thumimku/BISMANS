@@ -17,6 +17,30 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!-- Bootstrap Core CSS -->
 <link href="css/bootstrap.min.css" rel='stylesheet' type='text/css' />
 <!-- Custom CSS -->
+
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+    <!--<script src="https://www.w3schools.com/lib/w3.js"></script>-->
+    <script src="js/w3.js"></script>
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel='stylesheet' type='text/css' />
+    <!-- Custom CSS -->
+    <link href="css/style.css" rel='stylesheet' type='text/css' />
+
+    <link rel="stylesheet" href="css/morris.css" type="text/css"/>
+    <!-- Graph CSS -->
+    <link href="css/font-awesome.css" rel="stylesheet">
+    <!-- jQuery -->
+    <script src="js/jquery-2.1.4.min.js"></script>
+    <!-- //jQuery -->
+    <link href='//fonts.googleapis.com/css?family=Roboto:700,500,300,100italic,100,400' rel='stylesheet' type='text/css'/>
+    <link href='//fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <!-- lined-icons -->
+    <link rel="stylesheet" href="css/icon-font.min.css" type='text/css' />
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/w3.js"></script>
 <link href="css/style.css" rel='stylesheet' type='text/css' />
 <link rel="stylesheet" href="css/morris.css" type="text/css"/>
 <!-- Graph CSS -->
@@ -68,10 +92,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <div class="left-content">
 	   <div class="mother-grid-inner">
             <!--header start here-->
-		   <div w3-include-html="notifi.html"></div>
-		   <script>
-               w3.includeHTML();
-		   </script>
+           <?php
+           include_once("notifi.php");
+           include_once("slidebar.php");
+           ?>
 
 		   <!--heder end here-->
 <ol class="breadcrumb">
@@ -79,15 +103,29 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 </ol>
 		   <div class="grid-form1">
 			   <h3>New Supplier Detail</h3>
+               <?php
+               if(isset($_GET['sucess']))
+               {
+                   echo "<h3 style='text-align: center;'><font color=\"red\"> Saved!.</font></h3>";
+               }
+               else if(isset($_GET['error']))
+               {
+                   echo "<h3 style='text-align: center;'><font color=\"red\"> Failed, Could not save!</font></h3>";
+
+               }
+               else if(isset($_GET['dup']))
+               {
+                   echo "<h3 style='text-align: center;'> <font color=\"red\"> Duplicate Shop Registration, Please Check & Re-enter it.</font></h3>";
+               }?>
 
 			   <div class="tab-content">
 				   <div class="tab-pane active" id="horizontal-form_1">
-					   <form class="form-horizontal">
+					   <form class="form-horizontal" method = "post" action = "addSupplier.php">
 						   <div class="form-group">
 
 							   <label  ><strong>Shop Name :</strong></label>
 							   <div >
-								   <input type="text" class="form-control1" id="addnewsupplier_supplier" placeholder="Supplier Name">
+								   <input type="text" name = "supplierName" class="form-control1" id="addnewsupplier_supplier" placeholder="Supplier Name" required>
 							   </div>
 
 						   </div>
@@ -96,10 +134,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 							   <label  ><strong>Street Address :</strong></label>
 							   <div >
-								   <input type="text" class="form-control1" id="addnewsupplier_streetaddress_1" placeholder="Street Address ">
-							   </div><div >
-							   <input type="text" class="form-control1" id="addnewsupplier_streetaddress_2" placeholder="Street Address">
-						   </div>
+								   <input type="text" name = "addressLine1" class="form-control1" id="addnewsupplier_streetaddress_1" placeholder="Street Address" required>
+							   </div>
+                               <div >
+                                   <input type="text" name = "addressLine2" class="form-control1" id="addnewsupplier_streetaddress_2" placeholder="Street Address" required>
+                               </div>
 
 
 						   </div>
@@ -108,7 +147,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 							   <label  ><strong>city :</strong></label>
 							   <div >
-								   <input type="text" class="form-control1" id="addnewsupplier_city" placeholder="City">
+								   <input type="text"  name = "city" class="form-control1" id="addnewsupplier_city" placeholder="City" required>
 							   </div>
 
 						   </div>
@@ -117,29 +156,33 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 							   <label  ><strong>Province :</strong></label>
 							   <div >
-								   <input type="text" class="form-control1" id="addnewsupplier_province" placeholder="Province">
+								   <input type="text" name = "province" class="form-control1" id="addnewsupplier_province" placeholder="Province" required>
 							   </div>
 
 						   </div>
 						   <div class="form-group">
 							   <label  ><strong>Contact Person :</strong></label>
 							   <div >
-								   <input type="text" class="form-control1" id="addnewsupplier_contactperson" placeholder="Contact Person">
+								   <input type="text" name = "contactPerson" class="form-control1" id="addnewsupplier_contactperson" placeholder="Contact Person" required>
 							   </div>
 						   </div>
 						   <div class="form-group">
 							   <label  ><strong>Contact Number :</strong></label>
 							   <div >
-								   <input type="text" class="form-control1" id="addnewsupplier_contactnumber" placeholder="Contact Number ">
+								   <input type="text" name = "contactNo" class="form-control1" id="addnewsupplier_contactnumber" placeholder="Contact Number" required>
 							   </div>
 						   </div>
-						   <div class="form-group">
-							   <label  ><strong>Poduct Type/SKU :</strong></label>
-							   <label style="padding:8px;"><span style="cursor:pointer;" onclick="addMoreRows(this.form);">+Add</span></label>
+                           <div class="row">
+                               <div class="col-sm-8 col-sm-offset-2">
+                                   <button class="btn-primary btn" id="addnewsupplier_accept"> Accept </button>
 
 
-							   <div id="addedRows"></div>
-						   </div>
+                               </div>
+                           </div>
+
+
+
+
 						   <script type="text/javascript">
                                var rowCount = 1;
                                function addMoreRows(frm) {
@@ -165,29 +208,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 
 
-		   <div class="grid-form1">
 
-
-
-
-			   <div class="bs-example" data-example-id="form-validation-states-with-icons">
-				   <form>
-
-
-
-
-					   <div class="panel-footer">
-						   <div class="row">
-							   <div class="col-sm-8 col-sm-offset-2">
-								   <button class="btn-primary btn" id="addnewsupplier_accept	">Accept</button>
-
-
-							   </div>
-						   </div>
-					   </div>
-				   </form>
-			   </div>
-		   </div>
   <!--//content-inner-->
 		<!--/sidebar-menu-->
 	   <div w3-include-html="slidebar.html"></div>

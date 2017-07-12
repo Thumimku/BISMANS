@@ -1,9 +1,7 @@
-<!--
-Author: W3layouts
-Author URL: http://w3layouts.com
-License: Creative Commons Attribution 3.0 Unported
-License URL: http://creativecommons.org/licenses/by/3.0/
--->
+<?php
+    include_once('config.php');
+    include_once('system_session.php');
+?>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -16,6 +14,29 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!-- Bootstrap Core CSS -->
 <link href="css/bootstrap.min.css" rel='stylesheet' type='text/css' />
 <!-- Custom CSS -->
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+    <!--<script src="https://www.w3schools.com/lib/w3.js"></script>-->
+    <script src="js/w3.js"></script>
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel='stylesheet' type='text/css' />
+    <!-- Custom CSS -->
+    <link href="css/style.css" rel='stylesheet' type='text/css' />
+
+    <link rel="stylesheet" href="css/morris.css" type="text/css"/>
+    <!-- Graph CSS -->
+    <link href="css/font-awesome.css" rel="stylesheet">
+    <!-- jQuery -->
+    <script src="js/jquery-2.1.4.min.js"></script>
+    <!-- //jQuery -->
+    <link href='//fonts.googleapis.com/css?family=Roboto:700,500,300,100italic,100,400' rel='stylesheet' type='text/css'/>
+    <link href='//fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <!-- lined-icons -->
+    <link rel="stylesheet" href="css/icon-font.min.css" type='text/css' />
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/w3.js"></script>
 <link href="css/style.css" rel='stylesheet' type='text/css' />
 	<script src="js/w3.js"></script>
 <link rel="stylesheet" href="css/morris.css" type="text/css"/>
@@ -68,10 +89,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <div class="left-content">
 	   <div class="mother-grid-inner">
             <!--header start here-->
-		   <div w3-include-html="notifi.html"></div>
-		   <script>
-               w3.includeHTML();
-		   </script>
+           <?php
+           include_once("notifi.php");
+           include_once("slidebar.php");
+           ?>
 
 		   <!--heder end here-->
 <ol class="breadcrumb">
@@ -86,24 +107,40 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<table id="table">
 				<thead>
 				<tr>
-					<th>Name</th>
-					<th>Master Area</th>
+                    <th>Employee Id</th>
+					<th>First Name</th>
+					<th>Last Name</th>
+                    <th>E-Mail</th>
 					<th>Contact Number</th>
-					<th>Supplier</th>
+					<th>Status</th>
 
 					<th></th>
 					<th></th>
 				</tr>
 				</thead>
 				<tbody>
-				<tr>
-					<td id="employee_name">Jill Smith</td>
-					<td id="employee_masterarea">25</td>
-					<td id="employee_contactnumber">Female</td>
-					<td id="employee_supplier">British Columbia</td>
-
-				</tr>
-
+                <?php
+                $employeeQuery = "SELECT * from tbllogin WHERE position = 2";
+                $employeeQuery = $mysqli->query($employeeQuery);
+                while ($employeeObj = $employeeQuery->fetch_object()) {
+                    $status = $employeeObj->status;
+                    if($status==0) {
+                        $strStatus = "Passive";
+                    }else{
+                        $strStatus ="Active";
+                    }
+                    ?>
+                    <tr>
+                        <td id="employee_name"><?php echo $employeeObj->userId;?></td>
+                        <td id="employee_masterarea"><?php echo $employeeObj->firstName;?></td>
+                        <td id="employee_contactnumber"><?php echo $employeeObj->lastName;?></td>
+                        <td id="employee_supplier"><?php echo $employeeObj->email;?></td>
+                        <td id="employee_supplier"><?php echo $employeeObj->contactNo;?></td>
+                        <td id="employee_supplier"><?php echo $strStatus;?></td>
+                    </tr>
+                    <?php
+                }
+                ?>
 				</tbody>
 			</table>
 		</div>

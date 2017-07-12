@@ -1,9 +1,7 @@
-<!--
-Author: W3layouts
-Author URL: http://w3layouts.com
-License: Creative Commons Attribution 3.0 Unported
-License URL: http://creativecommons.org/licenses/by/3.0/
--->
+<?php
+    include_once ('config.php');
+    include_once ('system_session.php');
+?>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -20,6 +18,29 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <link href="css/style.css" rel='stylesheet' type='text/css' />
 <link rel="stylesheet" href="css/morris.css" type="text/css"/>
 <!-- Graph CSS -->
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+    <!--<script src="https://www.w3schools.com/lib/w3.js"></script>-->
+    <script src="js/w3.js"></script>
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel='stylesheet' type='text/css' />
+    <!-- Custom CSS -->
+    <link href="css/style.css" rel='stylesheet' type='text/css' />
+
+    <link rel="stylesheet" href="css/morris.css" type="text/css"/>
+    <!-- Graph CSS -->
+    <link href="css/font-awesome.css" rel="stylesheet">
+    <!-- jQuery -->
+    <script src="js/jquery-2.1.4.min.js"></script>
+    <!-- //jQuery -->
+    <link href='//fonts.googleapis.com/css?family=Roboto:700,500,300,100italic,100,400' rel='stylesheet' type='text/css'/>
+    <link href='//fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <!-- lined-icons -->
+    <link rel="stylesheet" href="css/icon-font.min.css" type='text/css' />
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/w3.js"></script>
 <link href="css/font-awesome.css" rel="stylesheet"> 
 <!-- jQuery -->
 <script src="js/jquery-2.1.4.min.js"></script>
@@ -68,10 +89,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <div class="left-content">
 	   <div class="mother-grid-inner">
             <!--header start here-->
-		   <div w3-include-html="notifi.html"></div>
-		   <script>
-               w3.includeHTML();
-		   </script>
+           <?php
+           include_once("notifi.php");
+           include_once("slidebar.php");
+           ?>
 
 		   <!--heder end here-->
 <ol class="breadcrumb">
@@ -83,30 +104,66 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<div class="agile-tables">
 		<div class="w3l-table-info">
 			<h2>Customer Details</h2>
+            <?php
+            if(isset($_GET['sucess']))
+            {
+                echo "<h2 style='text-align: center;'><font color=\"red\"> Saved!.</font></h2>";
+            }
+            else if(isset($_GET['error']))
+            {
+                echo "<h2 style='text-align: center;'><font color=\"red\"> Failed, Could not save!</font></h2>";
+
+            }
+            else if(isset($_GET['dup']))
+            {
+                echo "<h2 style='text-align: center;'> <font color=\"red\"> Duplicate Shop Registration, Please Check & Re-enter it.</font></h2>";
+            }?>
 			<table id="table">
 				<thead>
 				<tr>
 					<th>Customer ID</th>
 					<th>Customer Name</th>
-					<th>Contact Person</th>
+                    <th>Address</th>
+
+                    <th>Contact Person</th>
 					<th>Contact Number</th>
-					<th>Address</th>
-					<th>City/Province</th>
+
 
 				</tr>
 				</thead>
 				<tbody>
+                <?php
+                    $customerQuery = "SELECT * from tblcustomerdetails";
+                    $customerQuery = $mysqli->query($customerQuery);
+                    while($customerObj = $customerQuery->fetch_object()){
+                        $addressLine1 = $customerObj->addressLine1;
+                        $addressLine2 = $customerObj->addressLine2;
+                        $city = $customerObj->city;
+                        $province = $customerObj->province;
+                        $address = $addressLine1.","."\r"."<br>".$addressLine2.","."\r"."<br>".$city.","."\r"."<br>".$province;
+                ?>
 				<tr>
-					<td id="customer_customerid">012545</td>
-					<td id="customer_customername">Customer Name</td>
-					<td id="customer_contactperson">Contact Person</td>
-					<td id="customer_contactnumber">Phone Number</td>
-					<td id="customer_streetaddress">Address</td>
-					<td id="customer_cityandprovince">City/Province</td>
-					<td><a href="editcustomerdetails.php" id="customer_edit">Edit</a></td>
+					<td id="customer_customerid"><?php echo $customerObj->customerId ?></td>
+					<td id="customer_customername"><?php echo $customerObj->customerName ?></td>
+					<td id="customer_address"><?php echo $address ?></td>
+					<td id="customer_contactperson"><?php echo $customerObj->contactPerson ?></td>
+					<td id="customer_streetnumber"><?php echo $customerObj->contactNo ?></td>
+
+					<td><a href="addnewcustomer.php?editmode=activated
+&customerId=<?php echo $customerObj->customerId; ?>
+&customerName=<?php echo $customerObj->customerName; ?>
+&addressLine1=<?php echo $addressLine1; ?>
+&addressLine2=<?php echo $addressLine2; ?>
+&city=<?php echo $city; ?>
+&province=<?php echo $province; ?>
+&contactPerson=<?php echo $customerObj->contactPerson; ?>
+&contactNo=<?php echo $customerObj->contactNo; ?>
+" id="customer_edit">Edit</a></td>
+
+
 					<td><a href="javascript:void(0);" onclick="removeRow('+rowCount+');" id="customer_delete">Delete</a></td>
 				</tr>
-
+                <?php } ?>
 				</tbody>
 			</table>
 		</div>

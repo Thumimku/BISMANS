@@ -1,6 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<?php
+    include_once('config.php');
+    include_once('system_session.php');
+    $userName = $_SESSION['userName'];
+    $position = $_SESSION['position'];
+
+
+    date_default_timezone_set('Asia/colombo');
+
+?>
+
     <meta charset="UTF-8">
     <title>WESTART VENTURES...ADMIN</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -30,24 +38,48 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <script src="js/jquery.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/w3.js"></script>
-</head>
-<body>
+
+
 <div class="header-main">
     <div class="logo-w3-agile">
-        <h1><a href="index.php">WestArt Ventures</a></h1>
+        <h1><a href="index.php">WestArt</a></h1>
     </div>
     <div class="w3layouts-left">
 
         <!--search-box-->
-        <div class="w3-search-box">
-            <form action="#" method="post">
-                <input type="text" placeholder="Search..." required="">
+        <!--<div class="w3-search-box"> -->
+
+            <h1><a href="index.php">VENTURES</a></h1>
+
+            <!--<form action="#" method="post">
+               <input type="text" placeholder="Search..." required="">
                 <input type="submit" value="">
-            </form>
-        </div><!--//end-search-box-->
-        <div class="clearfix"> </div>
+            </form>-->
+        <!--</div><!--//end-search-box-->
+    <!--<div class="clearfix"> </div> -->
     </div>
     <div class="w3layouts-right">
+
+        <?php
+        $approvalQuery = "SELECT * from tblorder WHERE status = '0'";
+        $approvalQuery = $mysqli->query($approvalQuery);
+        $approvalCount = mysqli_num_rows($approvalQuery);
+        $deliveryQuery = "SELECT * from tblorder WHERE status = '2'";
+        $deliveryQuery = $mysqli->query($deliveryQuery);
+        $deliveryCount = mysqli_num_rows($deliveryQuery);
+
+        if ($position == 0){
+            $strPosition = "Administrator";
+        }elseif($position == 1){
+            $strPosition = "Junior Admin";
+        }elseif($position == 2){
+            $strPosition = "Sales Person";
+        }elseif($position == 3){
+            $strPosition = "Delivery Position";
+        }
+
+
+        ?>
         <div class="profile_details_left"><!--notifications of menu start -->
             <ul class="nofitications-dropdown">
                 <li class="dropdown head-dpdn">
@@ -106,103 +138,97 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     </ul>
                 </li>
                 <li class="dropdown head-dpdn">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-cart-arrow-down"></i><span class="badge blue">3</span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-cart-arrow-down"></i><span class="badge blue"><?php echo $approvalCount; ?></span></a>
                     <ul class="dropdown-menu">
                         <li>
                             <div class="notification_header">
-                                <h3>You have 3 new notification </h3>
+                                <h3>You have <?php
+
+                                    echo $approvalCount ?> notification </h3>
                             </div>
                         </li>
+                        <?php
+                            while($approvalObj = $approvalQuery->fetch_object()){
+                                $takenBy = $approvalObj->takenBy;
+                                $salesPersonQuery = "SELECT firstName from tbllogin WHERE userId = $takenBy";
+                                $salesPersonQuery = $mysqli->query($salesPersonQuery);
+                                $salesPersonObj = $salesPersonQuery->fetch_object();
+                                $salesPersonName = $salesPersonObj->firstName;
 
-                        <li><a href="ordermodal.php">
-                            <button type="button" class="btn btn-hover btn-order " >
+                                $currentTime = date('Y-m-d H:i:s');
+                                $takenTime = $approvalObj->takenTime;
+                                $ago = findTime($takenTime,$currentTime);
 
-                           <div class="notification_desc" >
-
-                               <p>Order ID/Shop name</p>
-
-                                   <p><span>1 hour ago</span></p>
-                            </div></button>
-                          <div class="clearfix"></div>
-                        </a></li>
+                        ?>
+                                <li class="odd"><a href="orderDetail.php">
+                                        <div class="user_img"><img src="images/in6.jpg" alt=""></div>
+                                        <div class="notification_desc">
+                                            <p>Order waiting for approval <br> added by <?php echo $salesPersonName ?></p>
+                                            <p><span><?php echo $ago; ?>ago</span></p>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </a></li>
+                        <?php } ?>
 
                         <!-- Modal -->
 
-                        <!--
-                         <li class="odd"><a href="#">
-                            <div class="user_img"><img src="images/in6.jpg" alt=""></div>
-                           <div class="notification_desc">
-                            <p>Lorem ipsum dolor</p>
-                            <p><span>1 hour ago</span></p>
-                            </div>
-                           <div class="clearfix"></div>
-                         </a></li>
-                         <li><a href="#">
-                            <div class="user_img"><img src="images/in7.jpg" alt=""></div>
-                           <div class="notification_desc">
-                            <p>Lorem ipsum dolor</p>
-                            <p><span>1 hour ago</span></p>
-                            </div>
-                           <div class="clearfix"></div>
-                         </a></li><-->
-                        <li>
+
+
+
                             <div class="notification_bottom">
-                                <a href="#">See all notifications</a>
+                                <a href="approveOrderDetails.php">See all notifications</a>
                             </div>
                         </li>
                     </ul>
                 </li>
                 <li class="dropdown head-dpdn">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-truck"></i><span class="badge blue1">9</span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-truck"></i><span class="badge blue1"><?php echo $deliveryCount; ?></span></a>
                     <ul class="dropdown-menu">
                         <li>
                             <div class="notification_header">
-                                <h3>You have 1 new Deliver Report</h3>
+                                <h3>You have <?php echo $deliveryCount; ?> delivery notifications</h3>
                             </div>
                         </li>
 
-                        <li><a href="deliverymodal.php">
-                            <button type="button" class="btn btn-hover btn-delivery " >
 
-                                <div class="notification_desc" >
 
-                                    <p>Order ID/Shop name</p>
+                        <?php
+                        while($deliveryObj = $deliveryQuery->fetch_object()){
+                            $deliveredBy = $deliveryObj->deliveredBy;
+                            $deliveryPersonQuery = "SELECT firstName from tbllogin WHERE userId = $deliveredBy";
+                            $deliveryPersonQuery = $mysqli->query($deliveryPersonQuery);
+                            $deliveryPersonObj = $deliveryPersonQuery->fetch_object();
+                            $deliveryPersonName = $deliveryPersonObj->firstName;
 
-                                    <p><span>1 hour ago</span></p>
-                                </div></button>
-                            <div class="clearfix"></div>
-                        </a></li>
-                        <!--
-                        <li><a href="#">
-                            <div class="task-info">
-                                <span class="task-desc">Dashboard done</span><span class="percentage">90%</span>
-                               <div class="clearfix"></div>
+                            $customerId = $deliveryObj->customerId;
+                            $customerQuery = "SELECT customerName from tblcustomerdetails WHERE customerId = $customerId";
+                            $customerQuery = $mysqli->query($customerQuery);
+                            $customerObj = $customerQuery->fetch_object();
+                            $customerName = $customerObj->customerName;
+
+                            $currentsTime = date('Y-m-d H:i:s');
+                            $deliveredTime = $deliveryObj->deliveredTime;
+                            $ago = findTime($deliveredTime,$currentsTime);
+
+                            ?>
+                            <div>
+                            <li class="odd"><a href = "#" >
+                                    <div class="user_img"><img src="images/in3.png" alt=""></div>
+                                    <div class="notification_desc">
+                                        <p>Order delivered to <?php echo $customerName; ?> <br> added by <?php echo $deliveryPersonName ?></p>
+                                        <p><span><?php echo $ago; ?>ago</span></p>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </a></li>
                             </div>
-                            <div class="progress progress-striped active">
-                                 <div class="bar green" style="width:90%;"></div>
-                            </div>
-                        </a></li>
-                        <li><a href="#">
-                            <div class="task-info">
-                                <span class="task-desc">Mobile App</span><span class="percentage">33%</span>
-                                <div class="clearfix"></div>
-                            </div>
-                           <div class="progress progress-striped active">
-                                 <div class="bar red" style="width: 33%;"></div>
-                            </div>
-                        </a></li>
-                        <li><a href="#">
-                            <div class="task-info">
-                                <span class="task-desc">Issues fixed</span><span class="percentage">80%</span>
-                               <div class="clearfix"></div>
-                            </div>
-                            <div class="progress progress-striped active">
-                                 <div class="bar  blue" style="width: 80%;"></div>
-                            </div>
-                        </a></li><-->
+                        <?php } ?>
+
+                        <!-- Modal -->
+
+
                         <li>
                             <div class="notification_bottom">
-                                <a href="#">See all pending tasks</a>
+                                <a href="#">End of notifications</a>
                             </div>
                         </li>
                     </ul>
@@ -222,8 +248,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <div class="profile_img">
                         <span class="prfil-img"><img src="images/in4.jpg" alt=""> </span>
                         <div class="user-name">
-                            <p>Admin</p>
-                            <span>Administrator</span>
+                            <p><?php echo $userName; ?></p>
+                            <span><?php echo $strPosition ?> </span>
                         </div>
                         <i class="fa fa-angle-down"></i>
                         <i class="fa fa-angle-up"></i>
@@ -233,14 +259,30 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <ul class="dropdown-menu drp-mnu">
 
                     <li> <a href="#"><i class="fa fa-user"></i> Profile</a> </li>
-                    <li> <a href="#"><i class="fa fa-sign-out"></i> Logout</a> </li>
+                    <li> <a href="logout.php"><i class="fa fa-sign-out"></i> Logout</a> </li>
                 </ul>
             </li>
         </ul>
     </div>
+    <?php
+    function findTime($startTime,$endTime){
+        $elapsed = strtotime($endTime)-strtotime($startTime);
+        if ($elapsed < 3600){
+            $ago = round($elapsed/60)." minutes ";
+
+        }elseif($elapsed<86400){
+            $ago = round($elapsed/3600)." hours ";
+        }else{
+            $ago = round($elapsed/86400)." days ";
+
+        }
+        return $ago;
+    }
+
+    ?>
+
 
     <div class="clearfix"> </div>
 </div>
 
-</body>
-</html>
+
