@@ -302,12 +302,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						</form>
 					  <h2>Invoice</h2>
 					  <LINK href="style.css" rel="stylesheet" type="text/css" />
-					    <FORM name="frmProduct" method="post" action="orderTable.php">
+					  <table>
+					   <FORM name="frmProduct" method="post" action="">
 <!--<DIV id="outer">-->
 <DIV id="header">
 <DIV class="float-left">&nbsp;</DIV>
-<DIV class="float-left col-heading">Item Name</DIV>
-<DIV class="float-left col-heading">Item Price</DIV>
+<DIV style="width:200px;" class="float-left col-heading">Item Name</DIV>
+<DIV style="width:200px;"class="float-left col-heading">Quantity</DIV>
+<DIV style="width:200px;"class="float-left col-heading">Unit Price</DIV>
+<DIV style="width:200px;"class="float-left col-heading">Amount</DIV>
 </DIV>
 <DIV id="product">
 <?php require_once("input.php") ?>
@@ -317,16 +320,61 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <input type="button" name="del_item" value="Delete" onClick="deleteRow();" />
 <span class="success"><?php if(isset($message)) { echo $message; }?></span>
 </DIV>
-<!--<DIV class="footer">-->
-<br></br>
-<DIV>
-<input type="submit" name="total" value="Total" />
+<DIV class="footer">
 <input type="submit" name="save" value="Save" />
+<input type="submit" name="total" value="Total" />
 </DIV>
 </DIV>
 </form>
-				<!-- //tables -->
+</table>				<!-- //tables -->
 			</div>
+			
+<script>
+function showUPrice(str) {
+    if (str == "") {
+        document.getElementById("txtHint").value = "";
+        return;
+    } else { 
+        if (window.XMLHttpRequest) {
+            // code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+        } else {
+            // code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("txtHint").value = this.responseText;
+            }
+        };
+        xmlhttp.open("GET","gethint.php?q="+str.value,true);
+        xmlhttp.send();
+    }
+}
+</script>
+<script>
+function calculateAmount(str) {
+    if (str == "") {
+        document.getElementById("Amount").value = "";
+        return;
+    } else { 
+        if (window.XMLHttpRequest) {
+            // code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+        } else {
+            // code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("Amount").value = this.responseText;
+            }
+        };
+        xmlhttp.open("GET","getAmount.php?q="+str,true);
+        xmlhttp.send();
+    }
+}
+</script>
 			<SCRIPT>
 function addMore() {
 	$("<DIV>").load("input.php", function() {
