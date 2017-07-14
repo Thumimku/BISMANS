@@ -185,7 +185,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 
 	<div class="bs-example" data-example-id="form-validation-states-with-icons">
-    <form>
+
      
       
 
@@ -193,15 +193,22 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
       <div class="panel-footer">
 		<div class="row">
 			<div class="col-sm-8 col-sm-offset-2">
-				<a href="orderDetail.php?redirect=true"> <button class="btn-primary btn">Go back </button></a>
+				 <a href = "orderDetail.php"><button class="btn-primary btn">Go back </button></a>
 
 
 			</div>
 		</div>
 	 </div>
-    </form>
+
   </div>
  	</div>
+
+
+           <script language="javascript" type="text/javascript">
+               function goBack(url){
+                   window.location.replace(url);
+               }
+           </script>
  	<!--//grid-->
 
 <!-- script-for sticky-nav -->

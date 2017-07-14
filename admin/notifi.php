@@ -41,6 +41,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 
 <div class="header-main">
+
     <div class="logo-w3-agile">
         <h1><a href="index.php">WestArt</a></h1>
     </div>
@@ -82,55 +83,114 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         ?>
         <div class="profile_details_left"><!--notifications of menu start -->
             <ul class="nofitications-dropdown">
+
+                <?php
+                $productQuery = "SELECT productId,threshold from tblproductdetails";
+                $productQuery = $mysqli->query($productQuery);
+                $emptyProducts = Array();
+                $expiryProducts = Array();
+                while($productObj= $productQuery->fetch_object()){
+                    $productId = $productObj->productId;
+                    $threshold = $productObj->threshold;
+                    $inventoryQuery = "SELECT quantity,sku from tblinventory WHERE  productId = $productId";
+                    $inventoryQuery = $mysqli->query($inventoryQuery);
+                    $inventoryObj = $inventoryQuery->fetch_object();
+                    $quantity = $inventoryObj->quantity;
+                    if ($quantity < $threshold){
+                        $emptyProducts[] = $inventoryObj->sku;
+
+                    }
+
+                    $batchQuery = "SELECT expiryDate,sku,batchNo from tblbatch where productId = $productId order by expiryDate asc LIMIT 1";
+                    $batchQuery = $mysqli->query($batchQuery);
+                    if($batchObj = $batchQuery->fetch_object()){
+                        $expiryDate = $batchObj->expiryDate;
+                        $currentDate = date("Y-m-d");
+                        $diff = date_diff(date_create($currentDate), date_create($expiryDate));
+
+                        if ($diff->days < 365) {
+                            $notific = "product " . $batchObj->sku . " belongs to batch " . $batchObj->batchNo . "`s expiry fell in one year due";
+                            $expiryProducts[] = $notific;
+                        }
+                    }
+
+                }
+                $emptyNotificationCount = count($emptyProducts);
+                $expiryNotificationCount = Count($expiryProducts);
+                $day = date("l");
+
+                if ($day == 'Saturday'){
+                    $notificationCount = $emptyNotificationCount + $expiryNotificationCount + 1;
+                }else{
+                    $notificationCount = $emptyNotificationCount + $expiryNotificationCount;
+                }
+                ?>
                 <li class="dropdown head-dpdn">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-cog"></i><span class="badge">3</span></a><!--This span is for number of notification-->
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-cog"></i><span class="badge"><?php echo $notificationCount;?></span></a><!--This span is for number of notification-->
                     <ul class="dropdown-menu">
+
                         <li>
                             <div class="notification_header">
-                                <h3>You have 3 new messages</h3>
+                                <h3>You have <?php echo $notificationCount; ?> new messages</h3>
                             </div>
                         </li>
                         <!--add new customer-->
-                        <li><a href="newcutomermodal.php">
-                            <button type="button" class="btn btn-hover btn-order " >
-
-                                <div class="notification_desc" >
-
-                                    <p>New Shop name/Area</p>
-
-                                    <p><span>1 hour ago</span></p>
-                                </div></button>
-                            <div class="clearfix"></div>
-                        </a></li>
-
-                        <!--Stock empty details and expiry stock details-->
-                        <li><a href="newcutomermodal.php">
-                            <button type="button" class="btn btn-hover btn-order " >
-
-                                <div class="notification_desc" >
-
-                                    <p>Product Name/Problem</p>
+                        <?php
+                        for ($i = 0;$i < $emptyNotificationCount;$i++){
 
 
-                                </div></button>
-                            <div class="clearfix"></div>
-                        </a></li>
+                        ?>
+                            <div>
+                        <li class="odd"><a href="orderDetail.php"><a href = "inventorydetails.php">
+                                <div class="user_img"><img src="images/notEmpty.jpg" alt=""></div>
+                                <div class="notification_desc">
+                                    <p>product <?php echo $emptyProducts[$i];?> has gone beyond its threshold stock level </p>
+
+                                </div>
+                                <div class="clearfix"></div>
+                            </a></li>
+                            </div>
+                        <?php } ?>
+
+                        <?php
+                        for ($i = 0;$i < $expiryNotificationCount;$i++){
 
 
-                        <!--return details-->
-                        <li><a href="returnordermodal.php">
-                        <button type="button" class="btn btn-hover btn-order " >
+                            ?>
+                            <div>
+                                <li class="odd"><a href="orderDetail.php">
+                                        <div class="user_img"><img src="images/expiry.jpg" alt=""></div>
+                                        <div class="notification_desc">
+                                            <p><?php echo $expiryProducts[$i];?></p>
 
-                            <div class="notification_desc" >
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </a></li>
+                            </div>
+                        <?php } ?>
 
-                                <p>Order ID/Shop name</p>
+                        <?php
+                        $day = date("l");
+                        if ($day == 'Saturday'){
+                            ?>
+                            <div>
+                                <li class="odd"><a href = "#" >
+                                        <div class="user_img"><img src="images/weekRep.png" alt=""></div>
+                                        <div class="notification_desc">
+                                            <p> Time to get your weekly report</p>
 
-                                <p><span>1 hour ago</span></p>
-                            </div></button>
-                        <div class="clearfix"></div>
-                    </a></li>
 
-                        <li>
+
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </a></li>
+                            </div>
+                        <?php } ?>
+
+
+
+
+
                             <div class="notification_bottom">
                                 <a href="#">See all messages</a>
                             </div>
@@ -160,7 +220,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 $ago = findTime($takenTime,$currentTime);
 
                         ?>
-                                <li class="odd"><a href="orderDetail.php">
+                                <li class="odd"><a href="approveOrderInvoice.php?orderId=<?php echo $approvalObj->orderId?>&customerId=<?php echo $approvalObj->customerId; ?>">
                                         <div class="user_img"><img src="images/in6.jpg" alt=""></div>
                                         <div class="notification_desc">
                                             <p>Order waiting for approval <br> added by <?php echo $salesPersonName ?></p>
@@ -171,6 +231,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <?php } ?>
 
                         <!-- Modal -->
+
 
 
 
@@ -217,6 +278,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                     <div class="notification_desc">
                                         <p>Order delivered to <?php echo $customerName; ?> <br> added by <?php echo $deliveryPersonName ?></p>
                                         <p><span><?php echo $ago; ?>ago</span></p>
+
+
                                     </div>
                                     <div class="clearfix"></div>
                                 </a></li>
@@ -224,6 +287,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <?php } ?>
 
                         <!-- Modal -->
+
+
 
 
                         <li>

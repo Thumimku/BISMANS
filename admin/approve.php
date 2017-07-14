@@ -30,7 +30,7 @@ if (isset($_GET['orderApproval'])){
         $inventoryObj = $inventoryQuery->fetch_object();
         $availQuantity = $inventoryObj->quantity;
         if ($availQuantity < $itemQuantity){
-            print('<script> window.location="approveOrderInvoice.php?stock=empty&orderId=<?php echo $orderId;?>"; </script> ');
+            print('<script> window.location="approveOrderDetails.php?stock=empty"; </script> ');
         }
 
     }
@@ -39,19 +39,20 @@ if (isset($_GET['orderApproval'])){
     while($itemObj = $itemQuery->fetch_object()){
         $itemQuantity  = $itemObj->quantity;
         $sku = $itemObj->sku;
-        $batchQuery = "SELECT quantity from tblbatch WHERE sku = '".$sku."' ORDER by expiryDate ASC";
+        $batchQuery = "SELECT quantity ,batchId from tblbatch WHERE sku = '".$sku."' ORDER by expiryDate ASC";
         $batchQuery = $mysqli->query($batchQuery);
         while($batchObj=$batchQuery->fetch_object()){
+            $batchId = $batchObj->batchId;
             $batchQuantity = $batchObj->quantity;
             if ($batchQuantity >= $itemQuantity){
                 $batchQuantity -= $itemQuantity;
-                $update = "UPDATE tblbatch SET quantity = $batchQuantity WHERE sku = '".$sku."'";
+                $update = "UPDATE tblbatch SET quantity = $batchQuantity WHERE batchId = $batchId";
                 $mysqli->query($update);
                 break;
             }else{
                 $batchQuantity = 0;
                 $itemQuantity -= $batchQuantity;
-                $update = "UPDATE tblbatch SET quantity = $batchQuantity WHERE sku = '".$sku."'";
+                $update = "UPDATE tblbatch SET quantity = $batchQuantity WHERE batchId = $batchId";
                 $mysqli->query($update);
             }
 
@@ -60,9 +61,11 @@ if (isset($_GET['orderApproval'])){
         $approveQuery = "UPDATE tblorder SET approvedBy = '$userId',approvedTime = '$currentTime' , status = '1' WHERE orderId = $orderId";
         $results = $mysqli->query($approveQuery);
         if($results){
-            print('<script> window.location="approveOrderInvoice.php?success=ok&orderId=<?php echo $orderId;?>&customerId=<?php echo $customerId; ?>"; </script> ');
+            $batchEmptyQuery = "DELETE FROM `westartventures`.`tblbatch` WHERE `tblbatch`.`quantity` = 0";
+            $mysqli->query($batchEmptyQuery);
+            print('<script> window.location="approveOrderDetails.php?success=ok"; </script> ');
         }else{
-            print('<script> window.location="approveOrderInvoice.php?error=failed"; </script> ');
+            print('<script> window.location="approveOrderDetails.php?error=failed"; </script> ');
         }
 
 

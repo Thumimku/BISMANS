@@ -101,6 +101,17 @@ include_once('system_session.php');
                 <div class="agile-tables">
                     <div class="w3l-table-info">
                         <h2>Approve Order Details</h2>
+                        <?php
+                        if (isset($_GET['success'])){
+                            echo "<h3 style='text-align: center;'><font color=\"red\"> Approved!.</font></h3>";
+                        }else if(isset($_GET['error'])){
+                            echo "<h3 style='text-align: center;'><font color=\"red\"> Failed, Could not approved!</font></h3>";
+
+                        }else if(isset($_GET['stock'])){
+                            echo "<h3 style='text-align: center;'> <font color=\"red\"> Enough stock is not available...! Refill stock</font></h3>";
+                        }
+
+                        ?>
                         <table id="table">
                             <thead>
                             <tr>

@@ -136,6 +136,8 @@
                                 $salesPersonObj = $salesPersonQuery->fetch_object();
                                 $salesPersonName = $salesPersonObj->firstName;
 
+                                $orderId = $orderObj->orderId;
+
 
                                 if (!isset($_GET['redirect'])){
                                     $link = "ordermodal.php?orderId=".$orderObj->orderId."&customerId=".$customerId;
@@ -175,7 +177,7 @@
                                     <td><?php echo $status;?></td>
                                     <td><div class="row">
                                             <div class="col-sm-8 col-sm-offset-2">
-                                              <a href = "<?php echo $link ?>"  <button class="btn-primary btn" id="addnewcustomer_accept	">View invoice</button> </a>
+                                              <a href = "<?php echo $link ?>" > <button class="btn-primary btn" id="addnewcustomer_accept	">View invoice</button></a>
 
 
                                             </div>

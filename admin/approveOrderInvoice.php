@@ -65,17 +65,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             <div class="grid-form1">
                 <h3>Approve Order Invoice</h3>
 
-                <?php
-                if (isset($_GET['success'])){
-                    echo "<h3 style='text-align: center;'><font color=\"red\"> Approved!.</font></h3>";
-                }else if(isset($_GET['error'])){
-                    echo "<h3 style='text-align: center;'><font color=\"red\"> Failed, Could not approved!</font></h3>";
 
-                }else if(isset($_GET['stock'])){
-                    echo "<h3 style='text-align: center;'> <font color=\"red\"> Enough stock is not available...! Refill stock</font></h3>";
-                }
-
-                ?>
 
                 <div class="tab-content">
 
