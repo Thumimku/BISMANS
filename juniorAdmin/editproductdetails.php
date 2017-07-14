@@ -131,11 +131,11 @@
                         <tr>
                             <td id="product_sku"><?php echo $_GET['sku']; ?></td>
                             <td id="product_productname"><?php echo $_GET['productName']; ?></td>
-                            <td ><input id="product_trprice" onkeyup="trpricefunction()" value = "<?php echo $_GET['trPrice']; ?>" name="trPrice" type="text" size="10%"/></td>
-                            <td ><input id="product_wsprice" onkeyup="wspricefunction()" value = "<?php echo $_GET['wsPrice']; ?>" name="wsPrice" type="text" size="10%"/></td>
-                            <td ><input id="product_mrprice" onkeyup="mrpricefunction()" value = "<?php echo $_GET['mrPrice']; ?>" name="mrPrice" type="text" size="10%"/></td>
+                            <td id="product_trprice"><input value = "<?php echo $_GET['trPrice']; ?>" name="trPrice" type="text" size="10%"/></td>
+                            <td id="product_wsprice"><input value = "<?php echo $_GET['wsPrice']; ?>" name="wsPrice" type="text" size="10%"/></td>
+                            <td id="product_mrprice"><input value = "<?php echo $_GET['mrPrice']; ?>" name="mrPrice" type="text" size="10%"/></td>
                             <td id="product_supplier"><?php echo $_GET['supplier']; ?></td>
-                            <td ><input id="product_thresholdamount" onkeyup="thresholdfunction()" value = "<?php echo $_GET['threshold']; ?>" name="threshold" type="text" size="10%"/></td>
+                            <td id="product_thresholdamount"><input value = "<?php echo $_GET['threshold']; ?>" name="threshold" type="text" size="10%"/></td>
                             <td><div class="row">
                                     <div class="col-sm-8 col-sm-offset-2">
                                         <button class="btn-primary btn"> Change </button>
@@ -146,74 +146,6 @@
 
                         </tr>
                         </form>
-                        <script>
-
-
-                            function trpricefunction() {
-                                var content = document.getElementById("product_trprice").value;
-
-                                var subcontent=content.substring(content.length-1);
-
-
-                                if (((content*100)%1)!=0)
-                                {
-
-                                    alert("Invalid input.Please input in currency form");
-                                    content = content.substring(0, content.length - 1);
-                                    document.getElementById("product_trprice").value=content;
-                                };
-
-                            }
-                            function wspricefunction() {
-                                var content = document.getElementById("product_wsprice").value;
-
-                                var subcontent=content.substring(content.length-1);
-
-
-                                if (((content*100)%1)!=0)
-                                {
-
-                                    alert("Invalid input.Please input in currency form");
-                                    content = content.substring(0, content.length - 1);
-                                    document.getElementById("product_wsprice").value=content;
-                                };
-
-                            }
-                            function mrpricefunction() {
-                                var content = document.getElementById("product_mrprice").value;
-
-                                var subcontent=content.substring(content.length-1);
-
-
-                                if (((content*100)%1)!=0)
-                                {
-
-                                    alert("Invalid input.Please input in currency form");
-                                    content = content.substring(0, content.length - 1);
-                                    document.getElementById("product_mrprice").value=content;
-                                };
-
-                            }
-                            function thresholdfunction() {
-                                var content = document.getElementById("product_thresholdamount").value;
-
-                                var subcontent=content.substring(content.length-1);
-
-                                if(subcontent=="."){
-                                    alert("Must input whole number ,Not Decimal");
-                                    content = content.substring(0, content.length - 1);
-                                    document.getElementById("product_thresholdamount").value=content;
-                                }
-                                if ((content%1) !=0)
-                                {
-
-                                    alert("Must input whole number");
-                                    content = content.substring(0, content.length - 1);
-                                    document.getElementById("product_thresholdamount").value=content;
-                                };
-
-                            }
-                        </script>
                         <?php
                     }else { ?>
                         <tr>

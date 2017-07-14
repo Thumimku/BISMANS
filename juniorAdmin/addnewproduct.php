@@ -123,7 +123,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 							   <label  ><strong>SKU :</strong></label>
 							   <div >
-								   <input type="text" onkeyup="skufunction()" class="form-control1" name = "sku" id="addnewproduct_sku" placeholder="SKU" required>
+								   <input type="text" class="form-control1" name = "sku" id="addnewproduct_sku" placeholder="SKU" required>
 							   </div>
 
 						   </div>
@@ -132,7 +132,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 							   <label  ><strong>Product Name :</strong></label>
 							   <div >
-								   <input type="text" onkeyup="productnamefunction()" class="form-control1" name = "productName" id="addnewproduct_productname" placeholder="Product Name" required>
+								   <input type="text" class="form-control1" name = "productName" id="addnewproduct_productname" placeholder="Product Name" required>
 							   </div>
 
 
@@ -142,7 +142,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 							   <label  ><strong>Supplier :</strong></label>
 							   <div >
-								   <input type="text" onkeyup="supplierfunction()" class="form-control1" name = "supplier" id="addnewproduct_supplier" placeholder="Supplier" required>
+								   <input type="text" class="form-control1" name = "supplier" id="addnewproduct_city" placeholder="Supplier" required>
 							   </div>
 
 						   </div>
@@ -151,11 +151,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 							   <label  class="col-sm-3 control-label"><strong>TR Price :</strong></label>
 							   <div >
-								   <input class="col-sm-3 control-label" type="text" onkeyup="trpricefunction()" name = "trPrice" class="form-control1" id="addnewproduct_trprice" placeholder="TR price" required>
+								   <input class="col-sm-3 control-label" type="text" name = "trPrice" class="form-control1" id="addnewproduct_trprice" placeholder="TR price" required>
 							   </div>
 							   <label  class="col-sm-3 control-label"><strong>WS Price :</strong></label>
 							   <div >
-								   <input class="col-sm-3 control-label" type="text" onkeyup="wspricefunction()" name = "wsPrice" class="form-control1" id="addnewproduct_wsprice" placeholder="WS price" required>
+								   <input class="col-sm-3 control-label" type="text" name = "wsPrice" class="form-control1" id="addnewproduct_wsprice" placeholder="WS price" required>
 							   </div>
 
 
@@ -163,11 +163,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						   <div class="form-group">
 							   <label  class="col-sm-3 control-label"><strong>MR Price :</strong></label>
 							   <div >
-								   <input class="col-sm-3 control-label" name = "mrPrice" onkeyup="mrpricefunction()" type="text" class="form-control1" id="addnewproduct_mrprice" placeholder="MR price" required>
+								   <input class="col-sm-3 control-label" name = "mrPrice" type="text" class="form-control1" id="addnewproduct_mrprice" placeholder="MR price" required>
 							   </div>
 							   <label  class="col-sm-3 control-label"><strong>Threshold Amount :</strong></label>
 							   <div >
-								   <input class="col-sm-3 control-label" name = "threshold" onkeyup="thresholdfunction()" type="text" class="form-control1" id="addnewproduct_thresholdamunt" placeholder="Threshold" required>
+								   <input class="col-sm-3 control-label" name = "threshold" type="text" class="form-control1" id="addnewproduct_thresholdamunt" placeholder="Threshold" required>
 							   </div>
 						   </div>
                            <div class="grid-form1">
@@ -198,136 +198,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				   </div>
 			   </div>
 		   </div>
-<!--Script for validation-->
-           <script>
-               //function for sku
-               function skufunction() {
-                   var content=document.getElementById("addnewproduct_sku").value;
-                   var subcontent=content.substring(content.length-1);
-                   var regex=/^[a-zA-Z]+$/;
-                   var rigex=/^[0-9]+$/;
-                   document.getElementById("addnewproduct_sku").value = content.toUpperCase();
 
-
-                       if (!subcontent.match(regex))  {
-                           if (!subcontent.match(rigex))
-                           if (content.length>0) {
-
-                               alert("Please input Valid Input in SKU");
-                               content = content.substring(0, content.length - 1);
-                               document.getElementById("addnewproduct_sku").value = content;
-                           }
-                       }
-
-               }
-               function productnamefunction() {
-                   var content=document.getElementById("addnewproduct_productname").value;
-                   var subcontent=content.substring(content.length-1);
-                   var regex=/^[a-zA-Z]+$/;
-
-
-
-
-                   if (!subcontent.match(regex))  {
-
-                           if (content.length>0) {
-
-                               alert("Please input Valid Input for Product Name");
-                               content = content.substring(0, content.length - 1);
-                               document.getElementById("addnewproduct_productname").value = content;
-                           }
-                   }
-
-               }
-               function supplierfunction() {
-                   var content=document.getElementById("addnewproduct_supplier").value;
-                   var subcontent=content.substring(content.length-1);
-                   var regex=/^[a-zA-Z ]+$/;
-
-
-
-                    if (subcontent!="."){
-                        if (!subcontent.match(regex))  {
-
-                            if (content.length>0) {
-
-                                alert("Please input Valid Input for Supplier");
-                                content = content.substring(0, content.length - 1);
-                                document.getElementById("addnewproduct_supplier").value = content;
-                            }
-                        }
-                    }
-
-
-               }
-
-               function trpricefunction() {
-                   var content = document.getElementById("addnewproduct_trprice").value;
-
-                   var subcontent=content.substring(content.length-1);
-
-
-                   if (((content*100)%1)!=0)
-                   {
-
-                       alert("Invalid input.Please input in currency form");
-                       content = content.substring(0, content.length - 1);
-                       document.getElementById("addnewproduct_trprice").value=content;
-                   };
-
-               }
-               function wspricefunction() {
-                   var content = document.getElementById("addnewproduct_wsprice").value;
-
-                   var subcontent=content.substring(content.length-1);
-
-
-                   if (((content*100)%1)!=0)
-                   {
-
-                       alert("Invalid input.Please input in currency form");
-                       content = content.substring(0, content.length - 1);
-                       document.getElementById("addnewproduct_wsprice").value=content;
-                   };
-
-               }
-               function mrpricefunction() {
-                   var content = document.getElementById("addnewproduct_mrprice").value;
-
-                   var subcontent=content.substring(content.length-1);
-
-
-                   if (((content*100)%1)!=0)
-                   {
-
-                       alert("Invalid input.Please input in currency form");
-                       content = content.substring(0, content.length - 1);
-                       document.getElementById("addnewproduct_mrprice").value=content;
-                   };
-
-               }
-               function thresholdfunction() {
-                   var content = document.getElementById("addnewproduct_thresholdamunt").value;
-
-                   var subcontent=content.substring(content.length-1);
-
-                   if(subcontent=="."){
-                       alert("Must input whole number ,Not Decimal");
-                       content = content.substring(0, content.length - 1);
-                       document.getElementById("addnewproduct_thresholdamunt").value=content;
-                   }
-                   if ((content%1) !=0)
-                   {
-
-                       alert("Must input whole number");
-                       content = content.substring(0, content.length - 1);
-                       document.getElementById("addnewproduct_thresholdamunt").value=content;
-                   };
-
-               }
-
-
-           </script>
 
 
 

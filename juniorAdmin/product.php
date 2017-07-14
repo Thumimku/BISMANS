@@ -2,11 +2,12 @@
     include_once('config.php');
     include_once('system_session.php');
 ?>
+
+
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>Pooled Admin Panel Category Flat Bootstrap Responsive Web Template | Tabels :: w3layouts</title>
-
+<title>Product Details</title>
 
 	<script src="js/w3.js"></script>
 	<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
@@ -102,6 +103,17 @@
 	<div class="agile-tables">
 		<div class="w3l-table-info">
 			<h2>Product Details</h2>
+            <?php
+            if (isset($_GET['sucess'])){
+                echo "<h3 style='text-align: center;'><font color=\"red\"> Saved!.</font></h3>";
+            }else if(isset($_GET['error'])){
+                echo "<h3 style='text-align: center;'><font color=\"red\"> Failed, Could not save!</font></h3>";
+
+            }else if(isset($_GET['dup'])){
+                echo "<h3 style='text-align: center;'> <font color=\"red\"> Duplicate product detail, Please Check & Re-enter it.</font></h3>";
+            }
+
+            ?>
 			<table id="table">
 				<thead>
 				<tr>
@@ -117,121 +129,31 @@
 				</thead>
 				<tbody>
                 <?php
-                if (isset($_GET['sku'])){
-                    $editSku = $_GET['sku'];
-
-                }
                 $productQuery = "SELECT * from tblproductdetails";
                 $productQuery = $mysqli->query($productQuery);
-                while($productObj=$productQuery->fetch_object()) {
-                    $sku = $productObj->sku;
-                    if ($sku == $editSku) {
-                        ?>
-                        <form method = "post" action = "addProduct.php?editmode=activated&sku=<?php echo $sku; ?>">
-                        <tr>
-                            <td id="product_sku"><?php echo $_GET['sku']; ?></td>
-                            <td id="product_productname"><?php echo $_GET['productName']; ?></td>
-                            <td ><input id="product_trprice" onkeyup="trpricefunction()" value = "<?php echo $_GET['trPrice']; ?>" name="trPrice" type="text" size="10%"/></td>
-                            <td ><input id="product_wsprice" onkeyup="wspricefunction()" value = "<?php echo $_GET['wsPrice']; ?>" name="wsPrice" type="text" size="10%"/></td>
-                            <td ><input id="product_mrprice" onkeyup="mrpricefunction()" value = "<?php echo $_GET['mrPrice']; ?>" name="mrPrice" type="text" size="10%"/></td>
-                            <td id="product_supplier"><?php echo $_GET['supplier']; ?></td>
-                            <td ><input id="product_thresholdamount" onkeyup="thresholdfunction()" value = "<?php echo $_GET['threshold']; ?>" name="threshold" type="text" size="10%"/></td>
-                            <td><div class="row">
-                                    <div class="col-sm-8 col-sm-offset-2">
-                                        <button class="btn-primary btn"> Change </button>
+                while($productObj = $productQuery->fetch_object()){
 
-
-                                    </div>
-                                </div></td>
-
-                        </tr>
-                        </form>
-                        <script>
-
-
-                            function trpricefunction() {
-                                var content = document.getElementById("product_trprice").value;
-
-                                var subcontent=content.substring(content.length-1);
-
-
-                                if (((content*100)%1)!=0)
-                                {
-
-                                    alert("Invalid input.Please input in currency form");
-                                    content = content.substring(0, content.length - 1);
-                                    document.getElementById("product_trprice").value=content;
-                                };
-
-                            }
-                            function wspricefunction() {
-                                var content = document.getElementById("product_wsprice").value;
-
-                                var subcontent=content.substring(content.length-1);
-
-
-                                if (((content*100)%1)!=0)
-                                {
-
-                                    alert("Invalid input.Please input in currency form");
-                                    content = content.substring(0, content.length - 1);
-                                    document.getElementById("product_wsprice").value=content;
-                                };
-
-                            }
-                            function mrpricefunction() {
-                                var content = document.getElementById("product_mrprice").value;
-
-                                var subcontent=content.substring(content.length-1);
-
-
-                                if (((content*100)%1)!=0)
-                                {
-
-                                    alert("Invalid input.Please input in currency form");
-                                    content = content.substring(0, content.length - 1);
-                                    document.getElementById("product_mrprice").value=content;
-                                };
-
-                            }
-                            function thresholdfunction() {
-                                var content = document.getElementById("product_thresholdamount").value;
-
-                                var subcontent=content.substring(content.length-1);
-
-                                if(subcontent=="."){
-                                    alert("Must input whole number ,Not Decimal");
-                                    content = content.substring(0, content.length - 1);
-                                    document.getElementById("product_thresholdamount").value=content;
-                                }
-                                if ((content%1) !=0)
-                                {
-
-                                    alert("Must input whole number");
-                                    content = content.substring(0, content.length - 1);
-                                    document.getElementById("product_thresholdamount").value=content;
-                                };
-
-                            }
-                        </script>
-                        <?php
-                    }else { ?>
-                        <tr>
-                            <td id="product_productid"><?php echo $productObj->sku; ?></td>
-                            <td id="product_productname"><?php echo $productObj->name; ?></td>
-                            <td id="product_trprice"><?php echo $productObj->trPrice; ?></td>
-                            <td id="product_wsprice"><?php echo $productObj->wsPrice; ?></td>
-                            <td id="product_mrprice"><?php echo $productObj->mrPrice; ?></td>
-                            <td id="product_supplier"><?php echo $productObj->supplier; ?></td>
-                            <td id="product_thresholdamount"><?php echo $productObj->threshold; ?></td>
-
-
-                        </tr>
-
-                        <?php
-                    }
-                }
                 ?>
+				<tr>
+					<td id="product_productid"><?php echo $productObj->sku; ?></td>
+					<td id="product_productname"><?php echo $productObj->name; ?></td>
+					<td id="product_trprice"><?php echo $productObj->trPrice; ?></td>
+					<td id="product_wsprice"><?php echo $productObj->wsPrice; ?></td>
+					<td id="product_mrprice"><?php echo $productObj->mrPrice; ?></td>
+					<td id="product_supplier"><?php echo $productObj->supplier; ?></td>
+					<td id="product_thresholdamount"><?php echo $productObj->threshold; ?></td>
+					<td><a href="editproductdetails.php?editmode=activated
+&sku=<?php echo $productObj->sku; ?>
+&productId=<?php echo $productObj->productId; ?>
+&productName=<?php echo $productObj->name; ?>
+&trPrice=<?php echo $productObj->trPrice; ?>
+&mrPrice=<?php echo $productObj->mrPrice; ?>
+&wsPrice=<?php echo $productObj->wsPrice; ?>
+&supplier=<?php echo $productObj->supplier; ?>
+&threshold=<?php echo $productObj->threshold; ?>" id="product_edit">Edit</a></td>
+
+				</tr>
+                <?php } ?>
 				</tbody>
 			</table>
 		</div>

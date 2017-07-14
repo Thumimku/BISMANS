@@ -125,7 +125,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 							   <label  ><strong>Shop Name :</strong></label>
 							   <div >
-								   <input type="text" onkeyup="suppliername()" name = "supplierName" class="form-control1" id="addnewsupplier_supplier" placeholder="Supplier Name" required>
+								   <input type="text" name = "supplierName" class="form-control1" id="addnewsupplier_supplier" placeholder="Supplier Name" required>
 							   </div>
 
 						   </div>
@@ -147,42 +147,29 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 							   <label  ><strong>city :</strong></label>
 							   <div >
-								   <input type="text"  onkeyup="cityfunction()" name = "city" class="form-control1" id="addnewsupplier_city" placeholder="City" required>
+								   <input type="text"  name = "city" class="form-control1" id="addnewsupplier_city" placeholder="City" required>
 							   </div>
 
 						   </div>
-                           <div class="form-group">
+						   <div class="form-group">
 
 
-                               <label  ><strong>Province :</strong></label>
-                               <div class="col-md-12 form-group2 group-mail">
+							   <label  ><strong>Province :</strong></label>
+							   <div >
+								   <input type="text" name = "province" class="form-control1" id="addnewsupplier_province" placeholder="Province" required>
+							   </div>
 
-                                   <select>
-                                       <option value="">Western</option>
-                                       <option value="">Out of Ceylon</option>
-                                       <option value="">North Central</option>
-                                       <option value="">North Western</option>
-                                       <option value="">Subaragamuwa</option>
-                                       <option value="">Eastern</option>
-                                       <option value="">Northern</option>
-                                       <option value="">Uwa</option>
-                                       <option value="">Western</option>
-                                       <option value="">Central</option>
-
-                                   </select>
-                               </div>
-
-                           </div>
+						   </div>
 						   <div class="form-group">
 							   <label  ><strong>Contact Person :</strong></label>
 							   <div >
-								   <input type="text" onkeyup="contactperson()" name = "contactPerson" class="form-control1" id="addnewsupplier_contactperson" placeholder="Contact Person" required>
+								   <input type="text" name = "contactPerson" class="form-control1" id="addnewsupplier_contactperson" placeholder="Contact Person" required>
 							   </div>
 						   </div>
 						   <div class="form-group">
 							   <label  ><strong>Contact Number :</strong></label>
 							   <div >
-								   <input type="text" onkeyup="phonenumber()" name = "contactNo" class="form-control1" id="addnewsupplier_contactnumber" placeholder="Contact Number" required>
+								   <input type="text" name = "contactNo" class="form-control1" id="addnewsupplier_contactnumber" placeholder="Contact Number" required>
 							   </div>
 						   </div>
                            <div class="row">
@@ -201,7 +188,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                function addMoreRows(frm) {
                                    rowCount ++;
                                    var recRow = '<p id="addnewsupplier_product_'+rowCount+'"><tr><td background="#f3faff;"><input name="" type="text" size="17%"  maxlength="60" style="margin:10px 20px 0 0;" /></td></tr> <a href="javascript:void(0);" onclick="removeRow('+rowCount+');">Delete</a></p>';
-                                   jQuery('#addedRows').append(recRow);n
+                                   jQuery('#addedRows').append(recRow);
                                }
 
                                function removeRow(removeNum) {
@@ -218,89 +205,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 
 
-           <!--Validation code-->
-
-           <script>
-               //function for phone number
-               function phonenumber() {
-                   var content = document.getElementById("addnewsupplier_contactnumber").value;
-
-                   var subcontent=content.substring(content.length-1);
-                   if(content.length >10){
-                       alert("Phone Number not More Than 10 digits");
-                       content = content.substring(0, content.length - 1);
-                       document.getElementById("addnewsupplier_contactnumber").value=content;
-                   }
-                   if(subcontent=="."){
-                       alert("Must input phone number ,Not Decimal");
-                       content = content.substring(0, content.length - 1);
-                       document.getElementById("addnewsupplier_contactnumber").value=content;
-                   }
-                   if ((content%1) !=0)
-                   {
-
-                       alert("Must input phone number");
-                       content = content.substring(0, content.length - 1);
-                       document.getElementById("addnewsupplier_contactnumber").value=content;
-                   };
-
-               }
-
-               function suppliername() {
-                   var content=document.getElementById("addnewsupplier_supplier").value;
-                   var subcontent=content.substring(content.length-1);
-                   var regex=/^[a-zA-Z]+$/;
-
-
-
-                   if(subcontent!="."){
-                       if (!subcontent.match(regex)) {
-                           if (content.length>0) {
-
-                               alert("Must input Text in Customer Name");
-                               content = content.substring(0, content.length - 1);
-                               document.getElementById("addnewsupplier_supplier").value = content;
-                           }
-                       }
-                   }
-
-               }
-               function cityfunction() {
-                   var content=document.getElementById("addnewsupplier_city").value;
-                   var subcontent=content.substring(content.length-1);
-                   var regex=/^[a-zA-Z]+$/;
-
-
-
-                   if (!subcontent.match(regex)) {
-                       if (content.length>0) {
-                           alert("Must input Text in City");
-                           content = content.substring(0, content.length - 1);
-                           document.getElementById("addnewsupplier_city").value = content;
-                       }
-                   }
-
-
-               }
-
-               function contactperson() {
-                   var content=document.getElementById("addnewsupplier_contactperson").value;
-                   var subcontent=content.substring(content.length-1);
-                   var regex=/^[a-zA-Z]+$/;
-
-
-                   if(subcontent!="."){
-                       if (!subcontent.match(regex)) {
-                           if (content.length>0) {
-                               alert("Must input Text in Contact Person");
-                               content = content.substring(0, content.length - 1);
-                               document.getElementById("addnewsupplier_contactperson").value = content;
-                           }
-                       }
-                   }
-
-               }
-           </script>
 
 
 

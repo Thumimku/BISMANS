@@ -65,18 +65,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             <div class="grid-form1">
                 <h3>Approve Order Invoice</h3>
 
-                <?php
-                if (isset($_GET['success'])){
-                    echo "<h3 style='text-align: center;'><font color=\"red\"> Approved!.</font></h3>";
-                }else if(isset($_GET['error'])){
-                    echo "<h3 style='text-align: center;'><font color=\"red\"> Failed, Could not approved!</font></h3>";
-
-                }else if(isset($_GET['stock'])){
-                    echo "<h3 style='text-align: center;'> <font color=\"red\"> Enough stock is not available...! Refill stock</font></h3>";
-                }
-
-                ?>
-
                 <div class="tab-content">
 
                     <?php
@@ -197,17 +185,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 
                 <div class="bs-example" data-example-id="form-validation-states-with-icons">
-                    <form method="GET" action = "approve.php">
+                    <form>
 
 
-                        <input type="hidden" name="orderApproval" value="<?php echo $orderId;?>">
-                        <input type="hidden" name="customerId" value="<?php echo $customerId;?>">
+
 
                         <div class="panel-footer">
-
                             <div class="row">
                                 <div class="col-sm-8 col-sm-offset-2">
-                                    <button class="btn-primary btn"> Approve </button>
+                                    <a href="orderDetail.php?redirect=true"> <button class="btn-primary btn"> Approve </button></a>
 
 
                                 </div>

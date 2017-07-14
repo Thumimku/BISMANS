@@ -22,17 +22,11 @@ if (isset($_POST['trPrice']) && isset($_POST['mrPrice'])){
         $supplier = $_POST['supplier'];
 
 
-        $iTime = time();
-        $inventoryId = $iTime;
+
         $time = time();
         $productId = $time;
-
-        $inventoryInsert = "INSERT INTO `tblinventory` (`inventoryId`,`productId`,`sku`) VALUES ('$inventoryId', '$productId', '$sku')";
-
-
         $insert = "INSERT INTO `tblproductdetails` (`productId`,`sku`,`name`, `supplier`,`trPrice`,`mrPrice`,`wsPrice`, `threshold`) VALUES ('$productId', '$sku', '$productName', '$supplier', '$trPrice', '$mrPrice', '$wsPrice','$threshold')";
         $results = $mysqli->query($insert);
-        $inventResult = $mysqli->query($inventoryInsert);
         if ($results) {
             print('<script> window.location="addnewproduct.php?sucess=ok"; </script> ');
         } else {
@@ -46,7 +40,6 @@ if (isset($_POST['trPrice']) && isset($_POST['mrPrice'])){
 
     }else{
         $sku = $_GET['sku'];
-
         $insert = "UPDATE `tblproductdetails` SET trPrice = '$trPrice',mrPrice ='$mrPrice',wsPrice = '$wsPrice',threshold = '$threshold' WHERE sku = '$sku'";
         $results = $mysqli->query($insert);
         if ($results) {
