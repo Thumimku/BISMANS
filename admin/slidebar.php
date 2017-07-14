@@ -1,3 +1,8 @@
+<?php
+    include_once('system_session.php');
+    include_once('config.php');
+    $position = $_SESSION['position'];
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,6 +27,10 @@
                 </ul>
             </li>
             <!--product details-->
+            <?php
+                    if ($position==0){
+                        ?>
+
             <li ><a href="#"><i class="fa fa-archive" aria-hidden="true"></i><span> PRODUCT </span> <span class="fa fa-angle-right" style="float: right"></span><div class="clearfix"></div></a>
                 <ul  >
                     <li  ><a href="addnewproduct.php">ADD NEW</a></li>
@@ -29,6 +38,7 @@
 
                 </ul>
             </li>
+            <?php } ?>
             <!--Supplier Details-->
             <li ><a href="#"><i class="fa fa-group" aria-hidden="true"></i><span> SUPPLIER </span> <span class="fa fa-angle-right" style="float: right"></span><div class="clearfix"></div></a>
                 <ul  >
@@ -41,8 +51,22 @@
             <!--Sales Rep  details-->
             <li ><a href="#"><i class="fa fa-user" aria-hidden="true"></i><span> SALES REP </span> <span class="fa fa-angle-right" style="float: right"></span><div class="clearfix"></div></a>
                 <ul  >
-                    <li  ><a href="addnewemployee.php">ADD NEW</a></li>
+                    <!--<li  ><a href="addnewemployee.php">ADD NEW</a></li> -->
                     <li  ><a href="employee.php">DETAILS</a></li>
+
+                </ul>
+            </li>
+            <li ><a href="#"><i class="fa fa-suitcase" aria-hidden="true"></i><span> ORDER </span> <span class="fa fa-angle-right" style="float: right"></span><div class="clearfix"></div></a>
+                <ul  >
+                    <li  ><a href="orderDetail.php"> VIEW ORDER </a> </li>
+                    <li  ><a href="approveOrderDetails.php">  APPROVE ORDER </a></li>
+
+                </ul>
+            </li>
+            <li ><a href="#"><i class="fa fa-info-circle" aria-hidden="true"></i><span> INVENTARY </span> <span class="fa fa-angle-right" style="float: right"></span><div class="clearfix"></div></a>
+                <ul  >
+                    <li  ><a href="addInventary.php"> ADD </a> </li>
+                    <li  ><a href="approveOrderDetails.php">  APPROVE ORDER </a></li>
 
                 </ul>
             </li>
