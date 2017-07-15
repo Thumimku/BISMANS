@@ -190,7 +190,11 @@
                 </div>
 
 
+                <script>
+                    var pword=document.getElementById("signup_password").value;
 
+                </script>
+               
 
 
                 <!-- //tables -->
