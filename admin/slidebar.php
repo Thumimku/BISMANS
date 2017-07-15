@@ -49,24 +49,34 @@
             </li>
 
             <!--Sales Rep  details-->
-            <li ><a href="#"><i class="fa fa-user" aria-hidden="true"></i><span> SALES REP </span> <span class="fa fa-angle-right" style="float: right"></span><div class="clearfix"></div></a>
+            <li ><a href="#"><i class="fa fa-user" aria-hidden="true"></i><span> EMPLOYEE </span> <span class="fa fa-angle-right" style="float: right"></span><div class="clearfix"></div></a>
                 <ul  >
                     <!--<li  ><a href="addnewemployee.php">ADD NEW</a></li> -->
-                    <li  ><a href="employee.php">DETAILS</a></li>
+                    <li><a href="employee.php">SALES REPS</a></li>
+                    <li><a href="deliveryPerson.php">DELIVERY PERSONS</a></li>
+                    <li><a href="approveEmployee.php">APPROVE EMPLOYEE</a></li>
 
                 </ul>
             </li>
             <li ><a href="#"><i class="fa fa-suitcase" aria-hidden="true"></i><span> ORDER </span> <span class="fa fa-angle-right" style="float: right"></span><div class="clearfix"></div></a>
                 <ul  >
-                    <li  ><a href="orderDetail.php"> VIEW ORDER </a> </li>
-                    <li  ><a href="approveOrderDetails.php">  APPROVE ORDER </a></li>
+                    <li  ><a href="approveOrderDetails.php">  APPROVE  </a></li>
+                    <li  ><a href="assignOrderDetails.php">  ASSIGN  </a></li>
+                    <li  ><a href="orderDetail.php"> DELIVERED </a> </li>
+
 
                 </ul>
             </li>
-            <li ><a href="#"><i class="fa fa-info-circle" aria-hidden="true"></i><span> INVENTARY </span> <span class="fa fa-angle-right" style="float: right"></span><div class="clearfix"></div></a>
+            <li ><a href="#"><i class="fa fa-info-circle" aria-hidden="true"></i><span> INVENTORY </span> <span class="fa fa-angle-right" style="float: right"></span><div class="clearfix"></div></a>
                 <ul  >
                     <li  ><a href="addInventory.php"> ADD </a> </li>
                     <li  ><a href="inventorydetails.php">  DETAILS </a></li>
+
+                </ul>
+            </li>
+            <li ><a href="weeklyreport.php"><i class="fa fa-info-circle" aria-hidden="true"></i><span> WEEKLY REPORT </span> <span class="fa fa-angle-right" style="float: right"></span><div class="clearfix"></div></a>
+                <ul  >
+
 
                 </ul>
             </li>

@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Haran
- * Date: 14/07/2017
- * Time: 00:20
- */
+
 
 include_once('config.php');
 if (isset($_POST['productName']) && isset($_POST['quantity'])){
@@ -19,7 +14,7 @@ if (isset($_POST['productName']) && isset($_POST['quantity'])){
 
 
 
-
+    $addedDate = date("Y-m-d");
     $queryCount = count($productId);
     for ($i = 0; $i < $queryCount;$i++){
         $time = time();
@@ -27,7 +22,7 @@ if (isset($_POST['productName']) && isset($_POST['quantity'])){
         $proId = $productId[$i];
         $qty = $quantity[$i];
 
-        $batchInsert = "INSERT INTO `tblbatch` (`batchId`,`productId`,`sku`,`batchNo`,`quantity`,`expiryDate`) VALUES ('$batchId', '$productId[$i]', '$sku[$i]','$batchNo[$i]','$quantity[$i]','$expiryDate[$i]')";
+        $batchInsert = "INSERT INTO `tblbatch` (`batchId`,`productId`,`sku`,`batchNo`,`quantity`,`expiryDate`,`addedDate`) VALUES ('$batchId', '$productId[$i]', '$sku[$i]','$batchNo[$i]','$quantity[$i]','$expiryDate[$i]','$addedDate')";
         $update = "UPDATE tblinventory SET quantity = quantity + $qty WHERE productId = $proId";
 
         $results = $mysqli->query($update);

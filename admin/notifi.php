@@ -89,6 +89,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 $productQuery = $mysqli->query($productQuery);
                 $emptyProducts = Array();
                 $expiryProducts = Array();
+                $supplierDue = Array();
+                $customerDue = Array();
                 while($productObj= $productQuery->fetch_object()){
                     $productId = $productObj->productId;
                     $threshold = $productObj->threshold;
@@ -101,28 +103,76 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
                     }
 
-                    $batchQuery = "SELECT expiryDate,sku,batchNo from tblbatch where productId = $productId order by expiryDate asc LIMIT 1";
+                    $batchQuery = "SELECT expiryDate,sku,batchNo,addedDate,paid from tblbatch where productId = $productId order by expiryDate asc LIMIT 1";
                     $batchQuery = $mysqli->query($batchQuery);
                     if($batchObj = $batchQuery->fetch_object()){
+
                         $expiryDate = $batchObj->expiryDate;
                         $currentDate = date("Y-m-d");
                         $diff = date_diff(date_create($currentDate), date_create($expiryDate));
 
-                        if ($diff->days < 365) {
+                    }
+                    if ($diff->days < 365) {
                             $notific = "product " . $batchObj->sku . " belongs to batch " . $batchObj->batchNo . "`s expiry fell in one year due";
                             $expiryProducts[] = $notific;
+
+                    }
+
+                    $batchDueQuery = "SELECT sku,batchNo,addedDate,paid from tblbatch where productId = $productId";
+                    $batchDueQuery = $mysqli->query($batchDueQuery);
+                    while($batchDueObj = $batchDueQuery->fetch_object()){
+                        if ($batchDueObj->paid == 0){
+                            $addedDate = $batchDueObj->addedDate;
+                            $duediff = date_diff(date_create($currentDate),date_create($addedDate));
+                            $absDiff = $duediff->days;
+                            if (($absDiff > 70) && ($absDiff < 75)){
+                                $supplierQuery = "SELECT supplier from tblproductdetails WHERE productId = $productId";
+                                $supplierQuery = $mysqli->query($supplierQuery);
+                                $supplierObj = $supplierQuery->fetch_object();
+                                $supplierDue[] = "Batch ".$batchDueObj->batchNo."`s payment due for ".$supplierObj->supplier." ".($absDiff - 70)." days ahead";
+
+
+                            }
                         }
                     }
 
+
+
+                }
+
+
+                //customer due notification
+
+                $orderQuery = "SELECT customerId,takenTime from tblorder WHERE paid = 0";
+                $orderQuery = $mysqli->query($orderQuery);
+                while($orderObj = $orderQuery->fetch_object()){
+                    $takenTime = $orderObj->takenTime;
+                    $currentDate = date("Y-m-d");
+                    $date = strtotime($takenTime);
+                    $takenDate = date("Y-m-d", $date);
+                    $duediff = date_diff(date_create($takenDate),date_create($currentDate));
+                    $absDiff = $duediff->days;
+
+                    if (($absDiff > 40) && ($absDiff < 45)){
+                        $customerId = $orderObj->customerId;
+                        $customerQuery = "SELECT customerName from tblcustomerdetails WHERE customerId = $customerId";
+                        $customerQuery = $mysqli->query($customerQuery);
+                        $customerObj = $customerQuery->fetch_object();
+                        $customerName  = $customerObj->customerName;
+                        $customerDue[] = "Customer payment due for ".$customerName." is ".($absDiff - 40)." days ahead";
+
+                    }
                 }
                 $emptyNotificationCount = count($emptyProducts);
                 $expiryNotificationCount = Count($expiryProducts);
+                $supplierNotificationCount = Count($supplierDue);
+                $customerNotificationCount = Count($customerDue);
                 $day = date("l");
 
                 if ($day == 'Saturday'){
-                    $notificationCount = $emptyNotificationCount + $expiryNotificationCount + 1;
+                    $notificationCount = $customerNotificationCount+$emptyNotificationCount + $expiryNotificationCount+$supplierNotificationCount + 1;
                 }else{
-                    $notificationCount = $emptyNotificationCount + $expiryNotificationCount;
+                    $notificationCount = $customerNotificationCount+ $emptyNotificationCount + $expiryNotificationCount+$supplierNotificationCount;
                 }
                 ?>
                 <li class="dropdown head-dpdn">
@@ -170,6 +220,45 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <?php } ?>
 
                         <?php
+                        for ($i = 0;$i < $supplierNotificationCount;$i++){
+
+
+                        ?>
+                        <div>
+                            <li class="odd"><a href="orderDetail.php">
+                                    <div class="user_img"><img src="images/supplierDue.png" alt=""></div>
+                                    <div class="notification_desc">
+                                        <p><?php echo $supplierDue[$i]; ?></p>
+
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </a></li>
+                        </div>
+                        <?php } ?>
+
+
+
+                        <?php
+                        for ($i = 0;$i < $customerNotificationCount;$i++){
+
+
+                            ?>
+                            <div>
+                                <li class="odd"><a href="orderDetail.php">
+                                        <div class="user_img"><img src="images/customerDue.png" alt=""></div>
+                                        <div class="notification_desc">
+                                            <p><?php echo $customerDue[$i];?></p>
+
+
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </a></li>
+                            </div>
+                        <?php } ?>
+
+
+
+                        <?php
                         $day = date("l");
                         if ($day == 'Saturday'){
                             ?>
@@ -192,7 +281,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 
                             <div class="notification_bottom">
-                                <a href="#">See all messages</a>
+                                <a href="#">End of notifications</a>
                             </div>
                         </li>
                     </ul>

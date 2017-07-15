@@ -21,4 +21,4 @@ if (isset($_GET['p'])) {
 
 
     echo $productId."&".$sku;
-}
+    }

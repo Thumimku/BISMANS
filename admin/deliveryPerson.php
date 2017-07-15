@@ -1,25 +1,19 @@
 <?php
-    include_once('config.php');
-    include_once('system_session.php');
+include_once('config.php');
+include_once('system_session.php');
 ?>
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>Order details</title>
-
+    <title>Pooled Admin Panel Category Flat Bootstrap Responsive Web Template | Tabels :: w3layouts</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="Pooled Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
     <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel='stylesheet' type='text/css' />
     <!-- Custom CSS -->
-    <link href="css/style.css" rel='stylesheet' type='text/css' />
-    <script src="js/w3.js"></script>
-    <link rel="stylesheet" href="css/morris.css" type="text/css"/>
-    <!-- Graph CSS -->
-    <link href="css/font-awesome.css" rel="stylesheet">
-    <!-- jQuery -->
-    <script src="js/jquery-2.1.4.min.js"></script>
-    <!-- //jQuery -->
-    <!-- tables -->
     <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
     <!--<script src="https://www.w3schools.com/lib/w3.js"></script>-->
     <script src="js/w3.js"></script>
@@ -43,6 +37,15 @@
     <script src="js/jquery.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/w3.js"></script>
+    <link href="css/style.css" rel='stylesheet' type='text/css' />
+    <script src="js/w3.js"></script>
+    <link rel="stylesheet" href="css/morris.css" type="text/css"/>
+    <!-- Graph CSS -->
+    <link href="css/font-awesome.css" rel="stylesheet">
+    <!-- jQuery -->
+    <script src="js/jquery-2.1.4.min.js"></script>
+    <!-- //jQuery -->
+    <!-- tables -->
     <link rel="stylesheet" type="text/css" href="css/table-style.css" />
     <link rel="stylesheet" type="text/css" href="css/basictable.css" />
     <script type="text/javascript" src="js/jquery.basictable.min.js"></script>
@@ -93,98 +96,48 @@
 
             <!--heder end here-->
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.php">Home</a><i class="fa fa-angle-right"></i>Delivered Order Details</li>
+                <li class="breadcrumb-item"><a href="index.php">Home</a><i class="fa fa-angle-right"></i>Delivery persons</li>
             </ol>
             <div class="agile-grids">
                 <!-- tables -->
 
                 <div class="agile-tables">
                     <div class="w3l-table-info">
-                        <h2>Delivered Order Details</h2>
+                        <h2> Delivery Persons Details</h2>
                         <table id="table">
                             <thead>
                             <tr>
-                                <th>Order Id</th>
-                                <th>Customer Name</th>
-                                <th>Taken By </th>
-                                <th>Payment method </td>
-                                <th>Order Status</th>
+                                <th>Employee Id</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>E-Mail</th>
+                                <th>Contact Number</th>
 
 
-                                <th></th>
                             </tr>
                             </thead>
                             <tbody>
                             <?php
-
-                            $orderQuery = "SELECT * from tblorder WHERE status = '2'";
-                            $orderQuery = $mysqli->query($orderQuery);
-
-
-                            while ($orderObj = $orderQuery->fetch_object()) {
-                                $customerId= $orderObj->customerId;
-                                $takenBy = $orderObj->takenBy;
-                                $paymentMethod = $orderObj->paymentMethod;
-                                $status  = $orderObj->status;
-                                $customerQuery = "SELECT customerName from tblcustomerdetails WHERE customerId = $customerId";
-                                $customerQuery = $mysqli->query($customerQuery);
-                                $customerObj = $customerQuery->fetch_object();
-                                $customerName = $customerObj->customerName;
-
-                                $salesPersonQuery = "SELECT firstName from tbllogin WHERE userId = $takenBy";
-                                $salesPersonQuery = $mysqli->query($salesPersonQuery);
-                                $salesPersonObj = $salesPersonQuery->fetch_object();
-                                $salesPersonName = $salesPersonObj->firstName;
-
-                                $orderId = $orderObj->orderId;
-
-
-                                if (!isset($_GET['redirect'])){
-                                    $link = "ordermodal.php?orderId=".$orderObj->orderId."&customerId=".$customerId;
+                            $employeeQuery = "SELECT * from tbllogin WHERE position = 3 and status =1";
+                            $employeeQuery = $mysqli->query($employeeQuery);
+                            while ($employeeObj = $employeeQuery->fetch_object()) {
+                                $status = $employeeObj->status;
+                                if($status==0) {
+                                    $strStatus = "Passive";
                                 }else{
-                                    $link = '#';
+                                    $strStatus ="Active";
                                 }
-
-
-
-                                if ($paymentMethod == 0){
-                                    $paymentMethod = 'Cash';
-                                }elseif($paymentMethod == 1){
-                                    $paymentMethod ='Cart';
-                                }elseif($paymentMethod== 2){
-                                    $paymentMethod = 'Cheque';
-                                }
-
-                                if ($status == 0){
-                                    $status = 'Registered';
-                                }elseif($status == 1){
-                                    $status = 'Approved';
-                                }elseif($status==2){
-                                    $status = 'Delivered';
-                                }elseif($status == 3){
-                                    $status = 'Paid';
-                                }
-
-                                if ($status != 'Registered'){
-
-
                                 ?>
                                 <tr>
-                                    <td><?php echo $orderObj->orderId;?></td>
-                                    <td><?php echo $customerName;?></td>
-                                    <td><?php echo $salesPersonName;?></td>
-                                    <td><?php echo $paymentMethod;?></td>
-                                    <td><?php echo $status;?></td>
-                                    <td><div class="row">
-                                            <div class="col-sm-8 col-sm-offset-2">
-                                              <a href = "<?php echo $link ?>" > <button class="btn-primary btn" id="addnewcustomer_accept	">View invoice</button></a>
+                                    <td id="employee_name"><?php echo $employeeObj->userId;?></td>
+                                    <td id="employee_masterarea"><?php echo $employeeObj->firstName;?></td>
+                                    <td id="employee_contactnumber"><?php echo $employeeObj->lastName;?></td>
+                                    <td id="employee_supplier"><?php echo $employeeObj->email;?></td>
+                                    <td id="employee_supplier"><?php echo $employeeObj->contactNo;?></td>
 
-
-                                            </div>
-                                        </div></td>
                                 </tr>
                                 <?php
-                            } }
+                            }
                             ?>
                             </tbody>
                         </table>

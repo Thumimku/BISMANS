@@ -1,6 +1,7 @@
 <?php
-    include_once('config.php');
-    include_once('system_session.php');
+include_once('config.php');
+include_once('system_session.php');
+
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -20,6 +21,9 @@
     <script src="js/jquery-2.1.4.min.js"></script>
     <!-- //jQuery -->
     <!-- tables -->
+    <link rel="stylesheet" type="text/css" href="css/table-style.css" />
+    <link rel="stylesheet" type="text/css" href="css/basictable.css" />
+    <script type="text/javascript" src="js/jquery.basictable.min.js"></script>
     <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
     <!--<script src="https://www.w3schools.com/lib/w3.js"></script>-->
     <script src="js/w3.js"></script>
@@ -43,9 +47,6 @@
     <script src="js/jquery.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/w3.js"></script>
-    <link rel="stylesheet" type="text/css" href="css/table-style.css" />
-    <link rel="stylesheet" type="text/css" href="css/basictable.css" />
-    <script type="text/javascript" src="js/jquery.basictable.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
             $('#table').basictable();
@@ -93,14 +94,25 @@
 
             <!--heder end here-->
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.php">Home</a><i class="fa fa-angle-right"></i>Delivered Order Details</li>
+                <li class="breadcrumb-item"><a href="index.php">Home</a><i class="fa fa-angle-right"></i>Assign Order Details</li>
             </ol>
             <div class="agile-grids">
                 <!-- tables -->
 
                 <div class="agile-tables">
                     <div class="w3l-table-info">
-                        <h2>Delivered Order Details</h2>
+                        <h2>Assign Order Details</h2>
+                        <?php
+                        if (isset($_GET['success'])){
+                            echo "<h3 style='text-align: center;'><font color=\"red\"> Assigned!.</font></h3>";
+                        }else if(isset($_GET['error'])){
+                            echo "<h3 style='text-align: center;'><font color=\"red\"> Failed, Could not be assigned!</font></h3>";
+
+                        }else if(isset($_GET['stock'])){
+                            echo "<h3 style='text-align: center;'> <font color=\"red\"> Enough stock is not available...! Refill stock</font></h3>";
+                        }
+
+                        ?>
                         <table id="table">
                             <thead>
                             <tr>
@@ -117,7 +129,7 @@
                             <tbody>
                             <?php
 
-                            $orderQuery = "SELECT * from tblorder WHERE status = '2'";
+                            $orderQuery = "SELECT * from tblorder WHERE status = 1";
                             $orderQuery = $mysqli->query($orderQuery);
 
 
@@ -136,11 +148,9 @@
                                 $salesPersonObj = $salesPersonQuery->fetch_object();
                                 $salesPersonName = $salesPersonObj->firstName;
 
-                                $orderId = $orderObj->orderId;
-
 
                                 if (!isset($_GET['redirect'])){
-                                    $link = "ordermodal.php?orderId=".$orderObj->orderId."&customerId=".$customerId;
+                                    $link = "assignOrderInvoice.php?orderId=".$orderObj->orderId."&customerId=".$customerId;
                                 }else{
                                     $link = '#';
                                 }
@@ -165,26 +175,26 @@
                                     $status = 'Paid';
                                 }
 
-                                if ($status != 'Registered'){
+                                if ($status == 'Approved'){
 
 
-                                ?>
-                                <tr>
-                                    <td><?php echo $orderObj->orderId;?></td>
-                                    <td><?php echo $customerName;?></td>
-                                    <td><?php echo $salesPersonName;?></td>
-                                    <td><?php echo $paymentMethod;?></td>
-                                    <td><?php echo $status;?></td>
-                                    <td><div class="row">
-                                            <div class="col-sm-8 col-sm-offset-2">
-                                              <a href = "<?php echo $link ?>" > <button class="btn-primary btn" id="addnewcustomer_accept	">View invoice</button></a>
+                                    ?>
+                                    <tr>
+                                        <td><?php echo $orderObj->orderId;?></td>
+                                        <td><?php echo $customerName;?></td>
+                                        <td><?php echo $salesPersonName;?></td>
+                                        <td><?php echo $paymentMethod;?></td>
+                                        <td><?php echo $status;?></td>
+                                        <td><div class="row">
+                                                <div class="col-sm-8 col-sm-offset-2">
+                                                    <a href = "<?php echo $link ?>"  <button class="btn-primary btn" id="addnewcustomer_accept	">View invoice</button> </a>
 
 
-                                            </div>
-                                        </div></td>
-                                </tr>
-                                <?php
-                            } }
+                                                </div>
+                                            </div></td>
+                                    </tr>
+                                    <?php
+                                }}
                             ?>
                             </tbody>
                         </table>

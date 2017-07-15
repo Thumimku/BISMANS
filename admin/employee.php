@@ -112,15 +112,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<th>Last Name</th>
                     <th>E-Mail</th>
 					<th>Contact Number</th>
-					<th>Status</th>
 
-					<th></th>
-					<th></th>
+
 				</tr>
 				</thead>
 				<tbody>
                 <?php
-                $employeeQuery = "SELECT * from tbllogin WHERE position = 2";
+                $employeeQuery = "SELECT * from tbllogin WHERE position = 2 and status =1";
                 $employeeQuery = $mysqli->query($employeeQuery);
                 while ($employeeObj = $employeeQuery->fetch_object()) {
                     $status = $employeeObj->status;
@@ -136,7 +134,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <td id="employee_contactnumber"><?php echo $employeeObj->lastName;?></td>
                         <td id="employee_supplier"><?php echo $employeeObj->email;?></td>
                         <td id="employee_supplier"><?php echo $employeeObj->contactNo;?></td>
-                        <td id="employee_supplier"><?php echo $strStatus;?></td>
+
                     </tr>
                     <?php
                 }
