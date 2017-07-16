@@ -331,7 +331,8 @@ li#menu-academico{
     float: left;
     width: 24.25%;
     background: #ff9501;
-    padding: 1em;
+    padding: 0em;
+    text-align: center;
 }
 .profile_details {
     float: left;
@@ -347,7 +348,6 @@ li#menu-academico{
     text-align: center;
 	 padding: 1em;
 	 margin-right: 1%;
-    border:100%
 }
 .nav > li > a:hover, .nav > li > a:focus {
     background: none !important;
@@ -368,7 +368,7 @@ span.logo-clr{
 	position: relative;
     z-index: 1;
     display: inline-block;
-    border:2px solid #fff;
+
 }
 .w3-search-box input[type="text"] {
     outline: none;
@@ -1779,6 +1779,14 @@ code {
     color: #fff;
     background-color: #2a3342;
 }
+.btn-order {
+    color:#00aced;
+    background-color: #ffffff;
+}
+btn-delivery{
+    color:#68AE00;
+    background-color: #ffffff;
+}
 .btn.disabled, .btn[disabled], fieldset[disabled] .btn {
     cursor: not-allowed;
     pointer-events: none;
@@ -1787,11 +1795,10 @@ code {
     -webkit-box-shadow: none;
     box-shadow: none;
 }
-.btn-dark.disabled, .btn-dark[disabled], fieldset[disabled] .btn-dark, .btn-dark.disabled:hover, .btn-dark[disabled]:hover, fieldset[disabled] .btn-dark:hover, .btn-dark.disabled:focus, .btn-dark[disabled]:focus, fieldset[disabled] .btn-dark:focus, .btn-dark.disabled:active, .btn-dark[disabled]:active, fieldset[disabled] .btn-dark:active, .btn-dark.disabled.active, .btn-dark[disabled].active, fieldset[disabled] .btn-dark.active {
-    background-color: #2a3342;
-    border-color: #2a3342;
-}
-.btn-system {
+
+
+
+btn-system {
     color: #fff;
     background-color: #6852b2;
 }
@@ -1807,6 +1814,23 @@ code {
     z-index: 100;
     font-weight: 600;
 }
+.btn-order.btn-order:hover, .btn-order.btn-order:focus, .btn-order.btn-order:active, .btn-order.btn-order.active {
+    background-color:#00aced;
+}
+.btn-order:hover, .btn-order:focus, .btn-order:active, .btn-order.active, .open > .dropdown-toggle.btn-order {
+    color: #fff;
+    background-color: #2a3342;
+    border-color: rgba(0, 0, 0, 0.05);
+}
+.btn-delivery.btn-delivery:hover, .btn-delivery.btn-delivery:focus, .btn-delivery.btn-delivery:active, .btn-delivery.btn-delivery.active {
+    background-color:#68AE00;
+}
+.btn-delivery:hover, .btn-delivery:focus, .btn-delivery:active, .btn-delivery.active, .open > .dropdown-toggle.btn-delivery {
+    color: #fff;
+    background-color: #2a3342;
+    border-color: rgba(0, 0, 0, 0.05);
+}
+
 .btn-dark.btn-dark:hover, .btn-dark.btn-dark:focus, .btn-dark.btn-dark:active, .btn-dark.btn-dark.active {
     background-color: #11a8bb;
 }
@@ -4151,6 +4175,9 @@ h4.title, .hightchat-grid1 h3 {
     -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
     -moz-box-shadow: 0 1px 1px rgba(0,0,0,.05);
 }
+.widget-shadow h3{
+    background-color:#f69988;
+}
 /*--statistics--*/
 .stats-info.widget {
     padding: 1em;
@@ -4188,8 +4215,16 @@ h4.title, .hightchat-grid1 h3 {
 .table.stats-table {
     margin-bottom: 0;
 }
+.table.stats-table h3 {
+
+    background-color:#f69988;
+}
 .stats-table span.label{
     font-weight: 500;
+}
+.stats-table h3 {
+    color: #4F52BA;
+    font-size: 0.9em;
 }
 .stats-table h5 {
     color: #4F52BA;
@@ -5216,9 +5251,9 @@ hr {
 .w3-search-box input[type="text"] {
     width: 78%;
 }
-.w3layouts-left {
+/*.w3layouts-left {
     padding: 0.73em;
-}
+}*/
 li.dropdown.head-dpdn a.dropdown-toggle {
     margin: 1em 0.7em;
 }
@@ -5456,10 +5491,19 @@ canvas#bar, canvas#line, canvas#pie {
     margin-right: 4%;
 	margin-bottom:1em;
 }
-.w3layouts-left {
+/*.w3layouts-left {
     width: 48%;
 	margin-bottom:1em;
-}
+
+    float: left;
+
+    text-align: center;
+    padding: 1em;
+    margin-right: 1%;
+    margin-top: 0em;
+    position: relative;
+
+}*/
 .w3layouts-right {
     width: 48%;
     margin: 0 4% 0 0;
@@ -6046,10 +6090,10 @@ table th, table td {
     margin-bottom: 1em;
     margin-right: 0;
 }
-.w3layouts-left {
+/*.w3layouts-left {
     width: 100%;
     margin-bottom: 1em;
-}
+}*/
 .w3-search-box input[type="text"] {
     width: 89%;
 }
@@ -6424,6 +6468,9 @@ ul.dropdown-menu {
 }
 .main-wthree input.name,.main-wthree input.password {
     padding: 7px 9px 8px 15px;
+}
+.orderlabeltext{
+    color: #1b93e1;
 }
 }
 /***responsive***/
