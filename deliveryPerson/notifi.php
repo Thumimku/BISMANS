@@ -91,7 +91,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             </div>
                         </li>
                         <!--add new customer-->
-                        <li><a href="newcutomermodal.php">
+                        <li>
                             <button type="button" class="btn btn-hover btn-order " >
 
                                 <div class="notification_desc" >
@@ -101,10 +101,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                     <p><span>1 hour ago</span></p>
                                 </div></button>
                             <div class="clearfix"></div>
-                        </a></li>
+                        </li>
 
                         <!--Stock empty details and expiry stock details-->
-                        <li><a href="newcutomermodal.php">
+                        <li>
                             <button type="button" class="btn btn-hover btn-order " >
 
                                 <div class="notification_desc" >
@@ -114,11 +114,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
                                 </div></button>
                             <div class="clearfix"></div>
-                        </a></li>
+                        </li>
 
 
                         <!--return details-->
-                        <li><a href="returnordermodal.php">
+                        <!--<li><a href="returnordermodal.php">
                         <button type="button" class="btn btn-hover btn-order " >
 
                             <div class="notification_desc" >
@@ -128,7 +128,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 <p><span>1 hour ago</span></p>
                             </div></button>
                         <div class="clearfix"></div>
-                    </a></li>
+                    </a></li>-->
 
                         <li>
                             <div class="notification_bottom">
