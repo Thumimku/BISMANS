@@ -230,7 +230,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
          	<div class="vali-form">
             <div class="col-md-12 form-group1">
               <label class="control-label">Customer/Shop Name</label>
-              <input type="text" name="customerName" placeholder="Customer name" required="">
+              <input type="text" onkeyup="customername()" id="addnew_customername"name="customerName" placeholder="Customer name" required="">
             </div>
             <div class="clearfix"> </div>
             </div>
@@ -241,34 +241,133 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			  <input type="text" name="addressLine2" placeholder="Address Line 2" >
             </div>
             <div class="col-md-6 form-group1">
-              <input type="text" name="city" placeholder="City" required="">
+              <input type="text" onkeyup="cityfunction()" id="addnew_city"name="city" placeholder="City" required="">
             </div>
-            <div class="col-md-6 form-group1 form-last">
-              <input type="text" name="province" placeholder="Province" required="">
-            </div>
+                <div class="form-group">
+
+
+
+                    <div class="col-md-6 form-group2 group-mail">
+
+                        <select>
+                            <option value="">Western</option>
+                            <option value="">Central</option>
+                            <option value="">North Central</option>
+                            <option value="">North Western</option>
+                            <option value="">Subaragamuwa</option>
+                            <option value="">Eastern</option>
+                            <option value="">Northern</option>
+                            <option value="">Uwa</option>
+                            <option value="">Western</option>
+                        </select>
+                    </div>
+
+                </div>
             <div class="clearfix"> </div>
 			</div>
 			<div class="vali-form">
 			<div class="col-md-6 form-group1">
               <label class="control-label">Contact Person</label>
-              <input type="text" name="contactPerson" placeholder="Contact Person" required="">
+              <input type="text" onkeyup="contactperson()" id="addnew_contactperson" name="contactPerson" placeholder="Contact Person" required="">
             </div>
             <div class="col-md-6 form-group1 form-last">
               <label class="control-label">Contact Number</label>
-              <input type="text" name="contactNumber" placeholder="contactNumber" required="">
+              <input type="text"  onkeyup="phonenumber()" id="addnew_contactnumber"name="contactNo" placeholder="contactNumber" required="">
             </div>
             <div class="clearfix"> </div>
             </div>
 			<br></br>
             <div class="col-md-12 form-group">
               <button type="submit" name="submit" class="btn btn-primary">Submit</button>
-              <button type="reset" class="btn btn-default">Reset</button>
             </div>
           <div class="clearfix"> </div>
         </form>
 		
  	<!---->
  </div>
+        <!--Validation code-->
+
+        <script>
+            //function for phone number
+            function phonenumber() {
+                var content = document.getElementById("addnew_contactnumber").value;
+
+                var subcontent=content.substring(content.length-1);
+                if(content.length >10){
+                    alert("Phone Number not More Than 10 digits");
+                    content = content.substring(0, content.length - 1);
+                    document.getElementById("addnew_contactnumber").value=content;
+                }
+                if(subcontent=="."){
+                    alert("Must input phone number ,Not Decimal");
+                    content = content.substring(0, content.length - 1);
+                    document.getElementById("addnew_contactnumber").value=content;
+                }
+                if ((content%1) !=0)
+                {
+
+                    alert("Must input phone number");
+                    content = content.substring(0, content.length - 1);
+                    document.getElementById("addnew_contactnumber").value=content;
+                };
+
+            }
+
+            function customername() {
+                var content=document.getElementById("addnew_customername").value;
+                var subcontent=content.substring(content.length-1);
+                var regex=/^[a-zA-Z]+$/;
+
+
+
+                if(subcontent!="."){
+                    if (!subcontent.match(regex)) {
+                        if (content.length>0) {
+
+                            alert("Must input Text in Customer Name");
+                            content = content.substring(0, content.length - 1);
+                            document.getElementById("addnew_customername").value = content;
+                        }
+                    }
+                }
+
+            }
+            function cityfunction() {
+                var content=document.getElementById("addnew_city").value;
+                var subcontent=content.substring(content.length-1);
+                var regex=/^[a-zA-Z]+$/;
+
+
+
+                if (!subcontent.match(regex)) {
+                    if (content.length>0) {
+                        alert("Must input Text in City");
+                        content = content.substring(0, content.length - 1);
+                        document.getElementById("addnew_city").value = content;
+                    }
+                }
+
+
+            }
+
+            function contactperson() {
+                var content=document.getElementById("addnew_contactperson").value;
+                var subcontent=content.substring(content.length-1);
+                var regex=/^[a-zA-Z]+$/;
+
+
+                if(subcontent!="."){
+                    if (!subcontent.match(regex)) {
+                        if (content.length>0) {
+                            alert("Must input Text in Contact Person");
+                            content = content.substring(0, content.length - 1);
+                            document.getElementById("addnew_contactperson").value = content;
+                        }
+                    }
+                }
+
+            }
+        </script>
 
 </div>
  	<!--//grid-->
@@ -278,7 +377,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			{
 				$time = time();
 				$customerId = $time;
-				$query = "INSERT INTO customer(customerId,customerName,addressLine1,addressLine2,city,province,contactPerson,contactNumber)VALUES('$customerId','$_POST[customerName]','$_POST[addressLine1]','$_POST[addressLine2]','$_POST[city]','$_POST[province]','$_POST[contactPerson]','$_POST[contactNumber]')";
+				$query = "INSERT INTO tblcustomerdetails(customerId,customerName,addressLine1,addressLine2,city,province,contactPerson,contactNo)VALUES('$customerId','$_POST[customerName]','$_POST[addressLine1]','$_POST[addressLine2]','$_POST[city]','$_POST[province]','$_POST[contactPerson]','$_POST[contactNo]')";
 				$result=mysqli_query($dbc,$query);
 			}
 			?>

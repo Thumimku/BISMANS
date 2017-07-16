@@ -12,20 +12,43 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="Pooled Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
-<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+	<script src="js/w3.js"></script>
+	<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 <!-- Bootstrap Core CSS -->
 <link href="css/bootstrap.min.css" rel='stylesheet' type='text/css' />
 <!-- Custom CSS -->
 <link href="css/style.css" rel='stylesheet' type='text/css' />
-<link href="css/order.css" rel='stylesheet' type='text/css' />
 <link rel="stylesheet" href="css/morris.css" type="text/css"/>
 <!-- Graph CSS -->
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+    <!--<script src="https://www.w3schools.com/lib/w3.js"></script>-->
+    <script src="js/w3.js"></script>
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel='stylesheet' type='text/css' />
+    <!-- Custom CSS -->
+    <link href="css/style.css" rel='stylesheet' type='text/css' />
+
+    <link rel="stylesheet" href="css/morris.css" type="text/css"/>
+    <!-- Graph CSS -->
+    <link href="css/font-awesome.css" rel="stylesheet">
+    <!-- jQuery -->
+    <script src="js/jquery-2.1.4.min.js"></script>
+    <!-- //jQuery -->
+    <link href='//fonts.googleapis.com/css?family=Roboto:700,500,300,100italic,100,400' rel='stylesheet' type='text/css'/>
+    <link href='//fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <!-- lined-icons -->
+    <link rel="stylesheet" href="css/icon-font.min.css" type='text/css' />
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/w3.js"></script>
 <link href="css/font-awesome.css" rel="stylesheet"> 
 <!-- jQuery -->
 <script src="js/jquery-2.1.4.min.js"></script>
 <!-- //jQuery -->
 <!-- tables -->
-
+<link rel="stylesheet" type="text/css" href="css/table-style.css" />
 <link rel="stylesheet" type="text/css" href="css/basictable.css" />
 <script type="text/javascript" src="js/jquery.basictable.min.js"></script>
 <script type="text/javascript">
@@ -257,26 +280,36 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             </ol>
 <div class="agile-grids">	
 				<!-- tables -->
-				
-				<div class="agile-tables">
+				<?php
+            if (isset($_GET['sucess'])){
+                echo "<h3 style='text-align: center;'><font color=\"red\"> Saved!.</font></h3>";
+            }else if(isset($_GET['error'])){
+                echo "<h3 style='text-align: center;'><font color=\"red\"> Failed, Could not save!</font></h3>";
+
+            }else if(isset($_GET['dup'])){
+                echo "<h3 style='text-align: center;'> <font color=\"red\"> Duplicate product detail, Please Check & Re-enter it.</font></h3>";
+            }
+
+            ?>
+			<div class="agile-tables">
 					<div class="w3l-table-info">
-						<form class="form-horizontal">
+						<form class="form-horizontal" method="post" action = "orders.php">
 						<div class="form-group">
 							<div class="col-sm-2">
 							<b>Date:</b>
 							</div>
 							<div class="col-sm-8">
-								<input type="text" name="date" size="30" value="<?php echo date('m/d/y');?>" readonly />
+								<input type="text" name="date" size="30" value="<?php echo date('y-m-d');?>" readonly />
 							</div>
 							<div class="col-sm-2"></div>
 						</div>
 						
 						<div class="form-group">
 							<div class="col-sm-2">
-							<b>Order Number:</b>
+							<b>Order Id:</b>
 							</div>
 							<div class="col-sm-8">
-								<input type="text" name="orderNumber" size="30" value="<?php echo time();?>" readonly />
+								<input type="text" name="orderId" size="30" value="<?php echo time();?>" readonly />
 							</div>
 							<div class="col-sm-2"></div>
 						</div>
@@ -291,130 +324,350 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						</div>
 						<div class="form-group">
 							<div class="col-sm-2">
+							<b>Sub Total:</b>
+							</div>
+							<div class="col-sm-8">
+								<input type="text" name="subtotal" id="subtotal"  size="30" value="" readonly />
+							</div>
+							<div class="col-sm-2"></div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-2">
 							<b>Discount:</b>
 							</div>
 							<div class="col-sm-8">
-								<input type="text" name="discount" size="30" value="" />
+								<input type="text" name="discount" id="discount"size="30" value=""  />
 							</div>
 							<div class="col-sm-2">					
 							</div>
 						</div>
-						</form>
+						<div class="form-group">
+							<div class="col-sm-2">
+							<b>Total:</b>
+							</div>
+							<div class="col-sm-8">
+								<input type="text" name="total" id="total" size="30" value="" readonly />
+							</div>
+							<div class="col-sm-2"></div>
+						</div>
+						
 					  <h2>Invoice</h2>
-					  <LINK href="style.css" rel="stylesheet" type="text/css" />
-					  <table>
-					   <FORM name="frmProduct" method="post" action="">
-<!--<DIV id="outer">-->
-<DIV id="header">
-<DIV class="float-left">&nbsp;</DIV>
-<DIV style="width:200px;" class="float-left col-heading">Item Name</DIV>
-<DIV style="width:200px;"class="float-left col-heading">Quantity</DIV>
-<DIV style="width:200px;"class="float-left col-heading">Unit Price</DIV>
-<DIV style="width:200px;"class="float-left col-heading">Amount</DIV>
-</DIV>
-<DIV id="product">
-<?php require_once("input.php") ?>
-</DIV>
-<DIV class="btn-action float-clear">
-<input type="button" name="add_item" value="Add More" onClick="addMore();" />
-<input type="button" name="del_item" value="Delete" onClick="deleteRow();" />
-<span class="success"><?php if(isset($message)) { echo $message; }?></span>
-</DIV>
-<DIV class="footer">
-<input type="submit" name="save" value="Save" />
-<input type="submit" name="total" value="Total" />
-</DIV>
-</DIV>
-</form>
-</table>				<!-- //tables -->
-			</div>
+            
 			
-<script>
-function showUPrice(str) {
-    if (str == "") {
-        document.getElementById("txtHint").value = "";
-        return;
-    } else { 
-        if (window.XMLHttpRequest) {
-            // code for IE7+, Firefox, Chrome, Opera, Safari
-            xmlhttp = new XMLHttpRequest();
-        } else {
-            // code for IE6, IE5
-            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-        }
-        xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("txtHint").value = this.responseText;
-            }
-        };
-        xmlhttp.open("GET","gethint.php?q="+str.value,true);
-        xmlhttp.send();
-    }
-}
-</script>
-<script>
-function calculateAmount(str) {
-    if (str == "") {
-        document.getElementById("Amount").value = "";
-        return;
-    } else { 
-        if (window.XMLHttpRequest) {
-            // code for IE7+, Firefox, Chrome, Opera, Safari
-            xmlhttp = new XMLHttpRequest();
-        } else {
-            // code for IE6, IE5
-            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-        }
-        xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("Amount").value = this.responseText;
-            }
-        };
-        xmlhttp.open("GET","getAmount.php?q="+str,true);
-        xmlhttp.send();
-    }
-}
-</script>
-			<SCRIPT>
-function addMore() {
-	$("<DIV>").load("input.php", function() {
-			$("#product").append($(this).html());
-	});	
-}
-function deleteRow() {
-	$('DIV.product-item').each(function(index, item){
-		jQuery(':checkbox', this).each(function () {
-            if ($(this).is(':checked')) {
-				$(item).remove();
-            }
-        });
-	});
-}
-</SCRIPT>
-<?php
-	if(!empty($_POST["save"])) {
-		$dbc = @mysqli_connect('localhost','root','','westart')OR die('Could not connect to MySQL: '.mysqli_connect_error());
-		$itemCount = count($_POST["item_name"]);
-		$itemValues=0;
-		$query = "INSERT INTO item (item_name,item_price) VALUES ";
-		$queryValue = "";
-		for($i=0;$i<$itemCount;$i++) {
-			if(!empty($_POST["item_name"][$i]) || !empty($_POST["item_price"][$i])) {
-				$itemValues++;
-				if($queryValue!="") {
-					$queryValue .= ",";
-				}
-				$queryValue .= "('" . $_POST["item_name"][$i] . "', '" . $_POST["item_price"][$i] . "')";
+			<table id="datatable">
+
+				<thead>
+				<tr>
+					<th>Product Id</th>
+					<th>Product Name</th>
+                    <th>Quantity</th>
+                    <th>Unit Price</th>
+                    <th>Amount</th>
+
+					<th style="padding:8px;"><span style="cursor:pointer;" onclick="addMoreRows(this.form);">+Add</span></th><br>
+
+
+				</tr>
+				</thead>
+				<tbody>
+
+				<tr id="rowId">
+					<td id="order_productid">
+                        <input  name="productId[]"  id = "productId1" type="text" size="10%" readonly required/>
+                    </td>
+					<td id="order_productname">
+                        <input  list = "products" name = "productName[]" id = "productName" type = "text" size = "10%" onchange = "getProductDetails(this.value,this)" required />
+
+                        <datalist id="products">
+
+
+                        </datalist>
+                    </td>
+					<td id="order_quantity">
+                        <input  name="quantity[]" type="number" size="10%" onchange = "getAmount(this.value,this);findTotal(this)" required/>
+                    </td>
+					<td id="order_price">
+                        <input  name="price[]" id = "price1" type="text" size="10%" readonly required/>
+                    </td>
+					<td id="order_amount">
+                        <input  name="amount[]" id="amount1"type="text" size="10%"  readonly required/>
+                    </td>
+                    <td></td>
+
+
+
+
+				</tr>
+
+
+				</tbody>
+			</table>
+            <div id="addedRows"></div>
+
+            <!--<script type="text/javascript">
+                var rowCount = 1;
+
+                function addMoreRows(frm) {
+                    rowCount ++;
+                    alert(rowCount);
+                    var recRow = '<p id="rowCount'+rowCount+'"><tr><td ><input name="trPrice" type="text" size="10%"  maxlength="60" style="margin:10px 38px 0 0;" /></td><td id="inventary_inventaryname"> <select name="trPrice" type="text" style="margin:10px 45px 0 0;"> <option value="">Select...</option> <option value="M">Male</option> <option value="F">Female</option> </select> </td><td id="inventary_sku"><input  name="trPrice" type="text" size="10%"  maxlength="60" style="margin:10px 27px 0 0;"/> </td><td id="inventary_batchnumber"> <input  name="trPrice" type="number" size="10%"  maxlength="60" style="margin:10px 20px 0 0;"/> </td> <td id="inventary_quantity"> <input  name="trPrice" type="number" size="10%"  maxlength="60" style="margin:10px 20px 0 0;"/> </td> <td id="inventary_expirydate"> <input   name="trPrice" type="date" size="10%"  maxlength="60" style="margin:10px 20px 0 0;"/> </td> <td><span style="cursor:pointer;" onclick="removeRow('+rowCount+');">Delete</span></td></tr></p>';
+                    jQuery('#addedRows').append(recRow);
+                }
+
+                function removeRow(removeNum,table) {
+
+                    alert(removeNum);
+                    tablenow.deleteRow(removeNum);
+
+                }
+            </script>-->
+
+            <script type="text/javascript">
+
+                function clearChildren( parent_id ) {
+                    var childArray = document.getElementById( parent_id ).children;
+                    if ( childArray.length > 0 ) {
+                        document.getElementById( parent_id ).removeChild( childArray[ 0 ] );
+                        clearChildren( parent_id );
+                    }
+                }
+
+                var options = new Array();
+
+
+                function showHint(str) {
+                    if (str.length == 0) {
+                        document.getElementById("productName").value = "";
+                        clearChildren('products');
+                        options = [];
+                        return;
+                    } else {
+                        var xmlhttp = new XMLHttpRequest();
+                        xmlhttp.onreadystatechange = function() {
+                            if (this.readyState == 4 && this.status == 200) {
+
+                                var list = document.getElementById('products');
+
+                                var optVal= this.responseText;
+
+                                if(!contains(options,optVal)){
+                                    clearChildren('products');
+                                    var option = document.createElement('option');
+                                    option.value = optVal;
+                                    list.appendChild(option);
+                                }
+
+                                options.push(optVal);
+
+
+                            }
+                        };
+                        xmlhttp.open("GET", "getProductHint.php?q=" + str, true);
+                        xmlhttp.send();
+                    }
+                }
+
+                function contains(a, obj) {
+                    for (var i = 0; i < a.length; i++) {
+                        if (a[i] === obj) {
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+
+
+                function createInput(name,dynId) {
+                    var inp = document.createElement("input");
+                    inp.setAttribute("id", dynId);
+                    inp.setAttribute("type", "text");
+                    inp.setAttribute("name",name);
+                    inp.setAttribute("size", "10%");
+                    inp.setAttribute("required","");
+					inp.setAttribute("readonly","");
+                    return inp;
+                }
+
+
+
+
+                var rowCount = 2;
+                function addMoreRows(str) {
+
+                    var table = document.getElementById("datatable");
+                    var row = table.insertRow(rowCount);
+
+                    var cell1 = row.insertCell(0);
+                    var cell2 = row.insertCell(1);
+                    var cell3 = row.insertCell(2);
+                    var cell4 = row.insertCell(3);
+                    var cell5 = row.insertCell(4);
+                    var cell6 = row.insertCell(5);
+                    //var cell7 = row.insertCell(6);
+
+
+                    var dynamicProductId = "productId" + rowCount ;
+                    var dynamicPrice = "price" + rowCount ;
+					var dynamicAmount = "amount" + rowCount ;
+                    rowCount += 1;
+
+
+
+                    cell1.appendChild(createInput("productId[]",dynamicProductId));
+
+                    cell2.innerHTML =   '<input list = "products" name = "productName[]" id = "productName" type = "text" size = "10%" onchange = "getProductDetails(this.value,this)" required/>';
+
+                    var datalist = document.createElement("datalist");
+                    datalist.id = 'products';
+
+                    cell2.appendChild(datalist);
+                    //cell3.appendChild(createInput("sku[]",dynamicSku));
+
+                    cell3.innerHTML = '<input  name="quantity[]" type="number" size="10%" onchange = "getAmount(this.value,this);findTotal(this)"required/> ';
+
+                    cell4.appendChild(createInput("price[]",dynamicPrice));
+					cell5.appendChild(createInput("amount[]",dynamicAmount));
+                    //cell5.innerHTML = '<input   name="amount[]" id="amount[]"type="text" size="10%" required/> ';
+                    cell6.innerHTML = '<span style="cursor:pointer;" onclick="deleteRow(this);"><strong>DEL</strong></span>';
+
+                }
+
+                function deleteRow(r) {
+                    var i = r.parentNode.parentNode.rowIndex;
+                    document.getElementById("datatable").deleteRow(i);
+                    rowCount -= 1;
+                }
+
+                function getProductDetails(str,element) {
+                    if (str == "") {
+                        document.getElementById("productId").value = "";
+                        document.getElementById("sku").value = "";
+                        return;
+                    } else {
+                        if (window.XMLHttpRequest) {
+                            // code for IE7+, Firefox, Chrome, Opera, Safari
+                            xmlhttp = new XMLHttpRequest();
+                        } else {
+                            // code for IE6, IE5
+                            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                        }
+                        xmlhttp.onreadystatechange = function() {
+                            if (this.readyState == 4 && this.status == 200) {
+
+                                var productDetail = this.responseText;
+                                var detailArray = productDetail.split("&");
+                                var productId = detailArray[0];
+                                var price = detailArray[1];
+
+                                var rowNumber = getId(element);
+                                var dynamicProductId = "productId" + rowNumber;
+                                var dynamicSkuId = "price" + rowNumber;
+
+                                document.getElementById(dynamicProductId).value = productId;
+                                document.getElementById(dynamicSkuId).value = price;
+
+
+
+                            }
+                        };
+                        xmlhttp.open("GET","getPrice.php?q="+str,true);
+                        xmlhttp.send();
+                    }
+                }
+                function  getId(element) {
+                     return element.parentNode.parentNode.rowIndex;
+                }
+				/*function getAmount(str,element) {
+                    if (str == "") {
+                        document.getElementById("productId").value = "";
+                        document.getElementById("sku").value = "";
+                        return;
+                    } else {
+                        if (window.XMLHttpRequest) {
+                            // code for IE7+, Firefox, Chrome, Opera, Safari
+                            xmlhttp = new XMLHttpRequest();
+                        } else {
+                            // code for IE6, IE5
+                            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                        }
+                        xmlhttp.onreadystatechange = function() {
+                            if (this.readyState == 4 && this.status == 200) {
+								var rowNumber = getId(element);
+								var dynamicPriceId = "price" + rowNumber;
+								var price =window.document.getElementById(dynamicPriceId).value;
+								var amount=price*str;
+								var dynamicAmountId = "amount" + rowNumber;
+								document.getElementById(dynamicAmountId).value =amount;
+                            }
+                        };
+                        xmlhttp.open("GET","getPrice.php?q="+str,true);
+                        xmlhttp.send();
+                    }
+                }*/
+				function getAmount(str,element) {
+					var rowNumber = getId(element);
+					var dynamicPriceId = "price" + rowNumber;
+					var price =window.document.getElementById(dynamicPriceId).value;
+					var amount=price*str;
+					var dynamicAmountId = "amount" + rowNumber;
+					document.getElementById(dynamicAmountId).value =amount;
+                    
+                }
+
+				function findTotal(element){
+					var rowNumber = getId(element);
+					var tot=0;
+					for(var i=1;i<rowNumber+1;i++){
+						var dynamicAmountId = "amount" + i;
+						var amount =window.document.getElementById(dynamicAmountId).value;
+						tot += parseInt(amount);
+					}
+					document.getElementById("subtotal").value =tot;
+					var discount =window.document.getElementById("discount").value;
+					document.getElementById("total").value =tot*(100-discount)/100;
+					
+				}                  
+					   
+            </script>
+
+
+            <div class="panel-footer">
+                <div class="row">
+                    <div class="col-sm-8 col-sm-offset-2">
+                        <button type="submit"class="btn-primary btn" name="order_accept" id="order_accept">Accept</button>
+                    </div>
+					
+                </div>
+            </div>
+            </form>
+			<?php
+			include('config.php');
+			if(isset($_POST['order_accept']))
+			{
+				$query1 = "INSERT INTO tblorder(date,orderId,customerName,subtotal,discount,total)VALUES('$_POST[date]','$_POST[orderId]','$_POST[customerName]','$_POST[subtotal]','$_POST[discount]','$_POST[total]')";
+				$result=mysqli_query($dbc,$query1);
+				//$query = "INSERT INTO tblorderitems(productId,productName) VALUES('$_POST[productId]','$_POST[productName]')";
+				//$result=mysqli_query($dbc,$query1);
+					$itemCount = count($_POST["productName"]);
+					$itemValues=0;
+					$query = "INSERT INTO tblorderitems(orderId,productId,productName,quantity,unitPrice,price) VALUES ";
+					$queryValue = "";
+					for($i=0;$i<$itemCount;$i++) {
+						if(!empty($_POST["productId"][$i]) || !empty($_POST["productName"][$i])) {
+							$itemValues++;
+							if($queryValue!="") {
+								$queryValue .= ",";
+							}
+							$queryValue .= "('$_POST[orderId]','" . $_POST["productId"][$i] . "', '" . $_POST["productName"][$i] . "', '" . $_POST["quantity"][$i] . "', '" . $_POST["price"][$i] . "', '" . $_POST["amount"][$i] . "')";
+						}
+					}
+					$sql = $query.$queryValue;
+					if($itemValues!=0) {
+						$result = mysqli_query($dbc,$sql);
+						 
+					}
 			}
-		}
-		$sql = $query.$queryValue;
-		if($itemValues!=0) {
-			$result = mysqli_query($dbc,$sql);
-			if(!empty($result)) $message = "Added Successfully.";
-		}
-	}
-?>
-<!-- script-for sticky-nav -->
+			?>
 		<script>
 		$(document).ready(function() {
 			 var navoffeset=$(".header-main").offset().top;

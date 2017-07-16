@@ -1778,6 +1778,14 @@ code {
     color: #fff;
     background-color: #2a3342;
 }
+.btn-order {
+    color:#00aced;
+    background-color: #ffffff;
+}
+btn-delivery{
+    color:#68AE00;
+    background-color: #ffffff;
+}
 .btn.disabled, .btn[disabled], fieldset[disabled] .btn {
     cursor: not-allowed;
     pointer-events: none;
@@ -1786,11 +1794,10 @@ code {
     -webkit-box-shadow: none;
     box-shadow: none;
 }
-.btn-dark.disabled, .btn-dark[disabled], fieldset[disabled] .btn-dark, .btn-dark.disabled:hover, .btn-dark[disabled]:hover, fieldset[disabled] .btn-dark:hover, .btn-dark.disabled:focus, .btn-dark[disabled]:focus, fieldset[disabled] .btn-dark:focus, .btn-dark.disabled:active, .btn-dark[disabled]:active, fieldset[disabled] .btn-dark:active, .btn-dark.disabled.active, .btn-dark[disabled].active, fieldset[disabled] .btn-dark.active {
-    background-color: #2a3342;
-    border-color: #2a3342;
-}
-.btn-system {
+
+
+
+btn-system {
     color: #fff;
     background-color: #6852b2;
 }
@@ -1806,6 +1813,23 @@ code {
     z-index: 100;
     font-weight: 600;
 }
+.btn-order.btn-order:hover, .btn-order.btn-order:focus, .btn-order.btn-order:active, .btn-order.btn-order.active {
+    background-color:#00aced;
+}
+.btn-order:hover, .btn-order:focus, .btn-order:active, .btn-order.active, .open > .dropdown-toggle.btn-order {
+    color: #fff;
+    background-color: #2a3342;
+    border-color: rgba(0, 0, 0, 0.05);
+}
+.btn-delivery.btn-delivery:hover, .btn-delivery.btn-delivery:focus, .btn-delivery.btn-delivery:active, .btn-delivery.btn-delivery.active {
+    background-color:#68AE00;
+}
+.btn-delivery:hover, .btn-delivery:focus, .btn-delivery:active, .btn-delivery.active, .open > .dropdown-toggle.btn-delivery {
+    color: #fff;
+    background-color: #2a3342;
+    border-color: rgba(0, 0, 0, 0.05);
+}
+
 .btn-dark.btn-dark:hover, .btn-dark.btn-dark:focus, .btn-dark.btn-dark:active, .btn-dark.btn-dark.active {
     background-color: #11a8bb;
 }
@@ -6423,6 +6447,9 @@ ul.dropdown-menu {
 }
 .main-wthree input.name,.main-wthree input.password {
     padding: 7px 9px 8px 15px;
+}
+.orderlabeltext{
+    color: #1b93e1;
 }
 }
 /***responsive***/
