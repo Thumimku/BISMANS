@@ -318,7 +318,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							<b>Customer Name:</b>
 							</div>
 							<div class="col-sm-8">
-								<input type="text" name="customerName" size="30" value="" />
+								<input type="text" name="customerName" size="30" value="" required/>
 							</div>
 							<div class="col-sm-2"></div>
 						</div>
@@ -336,7 +336,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							<b>Discount:</b>
 							</div>
 							<div class="col-sm-8">
-								<input type="text" name="discount" id="discount"size="30" value=""  />
+								<input type="text" name="discount" id="discount"size="30" value="" required />
 							</div>
 							<div class="col-sm-2">					
 							</div>

@@ -422,7 +422,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 									<li><a href="#"><i class="fa fa-check-square-o nav_icon"></i><span>Customer</span> <span class="fa fa-angle-right" style="float: right"></span><div class="clearfix"></div></a>
 									  <ul>
 										<li><a href="AddNew.php">Add New</a></li>
-										<li><a href="CustomerDetails.php">Customer Details</a></li>
+										<!--<li><a href="CustomerDetails.php">Customer Details</a></li>-->
 									</ul>
 									</li>
 								  </ul>
